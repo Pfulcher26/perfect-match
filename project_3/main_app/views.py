@@ -32,17 +32,26 @@ def Home(request):
      
 def About(request):
     return HttpResponse('about')
+
 def Sign_in(request):
     return HttpResponse('sign_in')
+
 def Sign_up(request):
     return HttpResponse('sign_up')
+
 def Search(request):
     return HttpResponse('search')
+
 def Sign_up(request):
     return HttpResponse('sign_up')
+
 def Matches(request):
     return HttpResponse('matches')
+
 def Profile(request):
     return HttpResponse('profile')
+
+def Saves(request):
+    return HttpResponse('saves')
 
 # Create your views here.
