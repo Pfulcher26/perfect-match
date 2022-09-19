@@ -18,4 +18,11 @@ from django.urls import path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', include('main_app.urls'))
+    # path('', views.)
+    # path('', views.)
+    # path my mathces 
+    # path mysavees 
+    # my profile sign in/up
+    # path about 
 ]
