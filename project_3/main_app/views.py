@@ -51,7 +51,6 @@ def Profile(request):
 def Saves(request):
     return HttpResponse('saves')    
 
-
 #json that returns everything related to software engineering jobs 
 response = requests.get('https://api.adzuna.com/v1/api/jobs/gb/search/1?app_id=5e5f3287&app_key=1755dc772df12b9e7aa9c2a0885b6983&results_per_page=200&what=software')
 
