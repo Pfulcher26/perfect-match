@@ -19,13 +19,8 @@ Headers = {
   "x-envoy-upstream-service-time": "711",
 }
 
-# def Home(request):
-#      response = requests.get("https://api.adzuna.com/v1/api/jobs/us/search/1?app_id=5e5f3287&app_key=1755dc772df12b9e7aa9c2a0885b6983")
-#      json = response.json()
-#      print('this is type of json', type(json))
-#      results = json['results']
-#      print('this is results variable', type(results))
-#      return HttpResponse(results[3]['location']['display_name'])
+def Home(request):
+    return render(request, 'home.html')
 
 def About(request):
     # return HttpResponse('about')
