@@ -2,7 +2,9 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.Home, name='home'),
+    # http://localhost:8000
+    path('', views.Job_Listings, name='Job_Listing'),
+    path('match-listing/', views.Match_Listings, name='Match_Listing'),
     path('about/', views.About, name = 'about'),
     path('sign_in/', views.Sign_in, name='sign_in'),
     path('sign_up/', views.Sign_up, name='sign_up'),
