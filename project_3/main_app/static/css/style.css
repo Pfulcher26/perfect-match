@@ -1,0 +1,23 @@
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    background-color: white; 
+    /* background-image: url('../images/splits.jpg'); */
+    color: black; 
+    font-family: 'IBM Plex Mono';
+    font-size: 2rem; 
+  }
+  
+  .container {
+    flex: 1 0 auto;
+  }
+
+  .container-2 {
+    font-size: 1.5rem; 
+  }
+  
+  footer.page-footer {
+    padding-top: 0;
+    text-align: right;
+  }
