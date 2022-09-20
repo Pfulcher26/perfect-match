@@ -10,6 +10,6 @@ urlpatterns = [
     path('job-matches/', views.job_matches, name='job_matches'),
     path('saved-jobs/', views.saved_jobs, name='saved_jobs'),
     path('profile/', views.profile, name='profile'),
-    path('about/', views.About, name = 'about'),
+    path('about/', views.about, name = 'about'),
 ]
 

@@ -6,6 +6,9 @@ from django.urls import reverse
 from django.shortcuts import render, redirect
 import requests
 
+#json that returns everything related to software engineering jobs 
+response = requests.get('https://api.adzuna.com/v1/api/jobs/gb/search/1?app_id=5e5f3287&app_key=1755dc772df12b9e7aa9c2a0885b6983&results_per_page=200&what=software')
+
 # from django.contrib.auth.backends import BaseBackend
 
 # from .models import User, Skill, Job, Company
@@ -30,10 +33,10 @@ def home(request):
     return render(request, 'home.html')
 
 def log_in(request):
-    return render(request, 'sign_in.html')
+    return render(request, 'registration/log_in.html')
 
 def sign_up(request):
-    return render(request, 'sign_up.html')
+    return render(request, 'registration/sign_up.html')
 
 def job_listings(request):
         #json is a json dictionary that has parsed the request object
@@ -42,6 +45,7 @@ def job_listings(request):
         results = json['results']
         return HttpResponse(results)
 
+skills = ['python', 'java', 'html']
 def job_matches(request):
     matches = []
     #json is a json dictionary that has parsed the request object
@@ -58,10 +62,10 @@ def job_matches(request):
     return HttpResponse(matches)
 
 def saved_jobs(request):
-    return render(request, 'saves.html')
+    return render(request, 'user/saved_jobs.html')
 
 def profile(request):
-    return render(request, 'profile.html')
+    return render(request, 'user/profile.html')
 
 def about(request):
     return render(request, 'about.html')
@@ -89,13 +93,6 @@ def about(request):
 
 # class CompanyDetail(LoginRequiredMixin, DetailView):
 #     model = ACompany
-
-
-#json that returns everything related to software engineering jobs 
-response = requests.get('https://api.adzuna.com/v1/api/jobs/gb/search/1?app_id=5e5f3287&app_key=1755dc772df12b9e7aa9c2a0885b6983&results_per_page=200&what=software')
-
-
-skills = ['python', 'java', 'html']
 
 
 #  for i in results:
