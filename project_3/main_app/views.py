@@ -32,9 +32,6 @@ def Sign_in(request):
 def Sign_up(request):
     return HttpResponse('sign_up')
 
-def Search(request):
-    return HttpResponse('search')
-
 def Sign_up(request):
     return HttpResponse('sign_up')
 
