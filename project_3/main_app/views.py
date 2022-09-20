@@ -1,7 +1,14 @@
 from http.client import HTTPResponse
-from django.shortcuts import render
 from django.http import HttpResponse
+from django.views.generic import ListView, DetailView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.urls import reverse
+from django.shortcuts import render, redirect
 import requests
+
+# from django.contrib.auth.backends import BaseBackend
+
+# from .models import User, Skill, Job, Company
 
 # Create your views here.
 
@@ -22,27 +29,47 @@ Headers = {
 def Home(request):
     return render(request, 'home.html')
 
-def About(request):
-    # return HttpResponse('about')
     return render(request, 'about.html')
 
 def Sign_in(request):
-    return HttpResponse('sign_in')
+    return render(request, 'sign_in.html')
 
 def Sign_up(request):
-    return HttpResponse('sign_up')
+    return render(request, 'sign_up.html')
 
-def Sign_up(request):
-    return HttpResponse('sign_up')
+def Search(request):
+    return render(request, 'search.html')
 
 def Matches(request):
-    return HttpResponse('matches')
+    return render(request, 'matches.html')
 
 def Profile(request):
-    return HttpResponse('profile')
+    return render(request, 'profile.html')
 
 def Saves(request):
-    return HttpResponse('saves')    
+    return render(request, 'saves.html')
+
+# def Company(request):
+    return render(request, 'company.html')
+
+# class JobDetail(LoginRequiredMixin, DetailView):
+#     model = Job
+
+# class JobDelete(LoginRequiredMixin, DeleteView):
+#     model = Job
+
+# class DeleteMatch(LoginRequiredMixin, DeleteView):
+#     model = Job
+
+# class CreateSkill(LoginRequiredMixin, CreateView): # add skill form
+#     model = Skill
+
+# class DeleteSkill(LoginRequiredMixin, DeleteView): 
+#     model = Skill
+
+# class CompanyDetail(LoginRequiredMixin, DetailView):
+#     model = ACompany
+
 
 #json that returns everything related to software engineering jobs 
 response = requests.get('https://api.adzuna.com/v1/api/jobs/gb/search/1?app_id=5e5f3287&app_key=1755dc772df12b9e7aa9c2a0885b6983&results_per_page=200&what=software')
@@ -96,4 +123,3 @@ def Match_Listings(request):
 #      print('this is results variable', type(results))
 #      return HttpResponse(results[3]['location']['display_name'])
      
-
