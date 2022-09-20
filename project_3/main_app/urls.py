@@ -3,7 +3,7 @@ from . import views
 
 urlpatterns = [
     # http://localhost:8000
-    path('', views.home, name='home'),
+    path('', views.Home, name='home'),
     path('job-listings/', views.Job_Listings, name = 'job_listings'),
     path('about/', views.About, name = 'about'),
     path('sign_in/', views.Sign_in, name='sign_in'),
