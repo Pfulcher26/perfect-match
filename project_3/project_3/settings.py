@@ -10,12 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 import environ
-import os
 import django
 django.setup()
 from pathlib import Path
-
-from main_app.models import MyUser
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -39,14 +36,12 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'main_app', 
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'django.contrib.contenttypes',
-    'multiselectfield',
+'django.contrib.admin',
+        'django.contrib.auth',
+        'django.contrib.contenttypes',
+        'django.contrib.sessions',
+        'django.contrib.messages',
+        'django.contrib.staticfiles',
 ]
 
 MIDDLEWARE = [
@@ -85,8 +80,12 @@ WSGI_APPLICATION = 'project_3.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'perfectmatch',
+        'USER' : 'postgres',
+        'PASSWORD' : 'postgres',
+        'HOST': 'localhost',
+        'PORT': 5432
     }
 }
 
@@ -131,3 +130,6 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+environ.Env()
+environ.Env.read_env()
