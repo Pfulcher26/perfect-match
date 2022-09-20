@@ -19,12 +19,12 @@
             <li><a href="/" class="left brand-logo">&nbsp;&nbsp;Perfect.Match()</a></li>
             </ul>
             <ul class="right">
-            <li><a href="{% url 'sign_in' %}">sign in</a></li>
-            <li><a href="{% url 'sign_up' %}">sign up</a></li>
-            <li><a href="{% url 'job_listings' %}">jobs</a></li>
-            <li><a href="{% url 'matches' %}">my matches</a></li>
-            <li><a href="{% url 'saves' %}">my saves</a></li>
-            <li><a href="{% url 'profile' %}">my profile</a></li>
+            <li><a href="{% url 'log_in' %}">Log in</a></li>
+            <li><a href="{% url 'sign_up' %}">Sign up</a></li>
+            <li><a href="{% url 'job_listings' %}">Job Listings</a></li>
+            <li><a href="{% url 'job_matches' %}">Job Matches</a></li>
+            <li><a href="{% url 'saved_jobs' %}">Saved Jobs</a></li>
+            <li><a href="{% url 'profile' %}">Profile</a></li>
             {% if user.is_authenticated %}
                 <!-- <li><a href="{% url 'logout' %}">log out</a></li> -->
             {% else %}
