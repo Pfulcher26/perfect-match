@@ -28,7 +28,8 @@ Headers = {
 #      return HttpResponse(results[3]['location']['display_name'])
 
 def About(request):
-    return HttpResponse('about')
+    # return HttpResponse('about')
+    return render(request, 'about.html')
 
 def Sign_in(request):
     return HttpResponse('sign_in')

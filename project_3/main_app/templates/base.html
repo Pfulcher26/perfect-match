@@ -5,19 +5,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Jean Claude Van Give a Damn</title>
+    <title>Perfect Match</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Qwitcher Grypen" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Bebas Neue" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM Plex Mono" rel="stylesheet">
 </head>
 <body>
-    <header class="navbar-fixed teal accent-1">
+    <header class="navbar-fixed">
         <nav>
-        <div class="nav-wrapper">
+        <div class="nav-wrapper black">
             <ul>
-            <li><a href="/" class="left brand-logo">&nbsp;&nbsp;PerfectMatch()</a></li>
+            <li><a href="/" class="left brand-logo">&nbsp;&nbsp;Perfect.Match()</a></li>
             </ul>
             <ul class="right">
             <li><a href="{% url 'sign_in' %}">sign in</a></li>
@@ -41,9 +41,8 @@
         {% block content %}
         {% endblock %}
     </main>
-    <footer class="page-footer teal accent-1">
-        <div class="right">All Rights Reserved, &copy; 2022 gopjp &nbsp;</div>
-        <div class="left"> <li><a href="{% url 'about' %}">about</a></li></div>
+    <footer class="page-footer black">
+        <div class="left h6"> <li><a href="{% url 'about' %}">about</a></li></div>
     </footer>
 </body>
 </html>
