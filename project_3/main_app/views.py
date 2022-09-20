@@ -26,31 +26,51 @@ Headers = {
   "x-envoy-upstream-service-time": "711",
 }
 
-def Home(request):
+def home(request):
     return render(request, 'home.html')
 
-    return render(request, 'about.html')
-
-def Sign_in(request):
+def log_in(request):
     return render(request, 'sign_in.html')
 
-def Sign_up(request):
+def sign_up(request):
     return render(request, 'sign_up.html')
 
-def Search(request):
-    return render(request, 'search.html')
+def job_listings(request):
+        #json is a json dictionary that has parsed the request object
+        json = response.json()
+        #results is an array that (in this case) contains additional dictionaries 
+        results = json['results']
+        return HttpResponse(results)
 
-def Matches(request):
-    return render(request, 'matches.html')
+def job_matches(request):
+    matches = []
+    #json is a json dictionary that has parsed the request object
+    json = response.json()
+    #results is an array that (in this case) contains additional dictionaries 
+    results = json['results']
 
-def Profile(request):
-    return render(request, 'profile.html')
+    for i in results:
+        for s in skills:
+            if (i['description'].lower().__contains__(s)):
+                matches.append(i['description'])
+                break
 
-def Saves(request):
+    return HttpResponse(matches)
+
+def saved_jobs(request):
     return render(request, 'saves.html')
 
-# def Company(request):
-    return render(request, 'company.html')
+def profile(request):
+    return render(request, 'profile.html')
+
+def about(request):
+    return render(request, 'about.html')
+
+
+
+
+# # def Company(request):
+#     return render(request, 'company.html')
 
 # class JobDetail(LoginRequiredMixin, DetailView):
 #     model = Job
@@ -78,35 +98,7 @@ response = requests.get('https://api.adzuna.com/v1/api/jobs/gb/search/1?app_id=5
 skills = ['python', 'java', 'html']
 
 
-def Job_Listings(request):
-     #json is a json dictionary that has parsed the request object
-     json = response.json()
-     #results is an array that (in this case) contains additional dictionaries 
-     results = json['results']
-     return HttpResponse(results)
-
-
-def Match_Listings(request):
-    matches = []
-     #json is a json dictionary that has parsed the request object
-    json = response.json()
-     #results is an array that (in this case) contains additional dictionaries 
-    results = json['results']
-
-    for i in results:
-        for s in skills:
-            if (i['description'].lower().__contains__(s)):
-                matches.append(i['description'])
-                break
-
-    return HttpResponse(matches)
- 
-                
-
-
-
-
-     #  for i in results:
+#  for i in results:
     #     if ()
     #     print(i['description'])
 

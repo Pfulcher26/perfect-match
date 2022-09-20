@@ -3,15 +3,13 @@ from . import views
 
 urlpatterns = [
     # http://localhost:8000
-    path('', views.Home, name='home'),
-    path('job-listings/', views.Job_Listings, name = 'job_listings'),
+    path('', views.home, name='home'),
+    path('log-in/', views.log_in, name='log_in'),
+    path('sign_up/', views.sign_up, name='sign_up'),
+    path('job-listings/', views.job_listings, name = 'job_listings'),
+    path('job-matches/', views.job_matches, name='job_matches'),
+    path('saved-jobs/', views.saved_jobs, name='saved_jobs'),
+    path('profile/', views.profile, name='profile'),
     path('about/', views.About, name = 'about'),
-    path('sign_in/', views.Sign_in, name='sign_in'),
-    path('sign_up/', views.Sign_up, name='sign_up'),
-    path('search/', views.Search, name='search'),
-    path('matches/', views.Matches, name='matches'),
-    path('saves/', views.Saves, name='saves'),
-    path('profile/', views.Profile, name='profile'),
-    path('match-listing/', views.Match_Listings, name='Match_Listing'),
 ]
 
