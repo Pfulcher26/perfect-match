@@ -5,6 +5,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse
 from django.shortcuts import render, redirect
 import requests
+from .models import MyUser, Skill
 
 #json that returns everything related to software engineering jobs 
 response = requests.get('https://api.adzuna.com/v1/api/jobs/gb/search/1?app_id=5e5f3287&app_key=1755dc772df12b9e7aa9c2a0885b6983&results_per_page=200&what=software')
@@ -35,8 +36,13 @@ def home(request):
 def log_in(request):
     return render(request, 'registration/log_in.html')
 
+def log_out(request):
+    return redirect('log_in')
+
 def sign_up(request):
-    return render(request, 'registration/sign_up.html')
+    skills = MyUser.skills.all().values_list('id')
+    print('this is s', skills)
+    return render(request, 'registration/sign_up.html', {'Skills': skills})
 
 def job_listings(request):
         #json is a json dictionary that has parsed the request object
@@ -69,6 +75,17 @@ def profile(request):
 
 def about(request):
     return render(request, 'about.html')
+
+def add_skill(request, myuser_id):
+    form = Skill(request.POST)
+    if form.is_valid():
+        new_skill = form.save(commit=False)
+        new_skill.myuser_id = myuser_id
+        print(new_skill)
+        new_skill.save()
+    return redirect('sign_up', myuser_id=myuser_id)
+    # MyUser.objects.get(id=user_id).skills.add(skill_id)
+    # return redirect('about')
 
 
 
