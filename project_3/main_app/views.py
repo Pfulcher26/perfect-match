@@ -66,7 +66,8 @@ def saved_jobs(request):
     return render(request, 'user/saved_jobs.html')
 
 def profile(request):
-    user = MyUser.objects.all()
+    current_user = request.user
+    user = MyUser.objects.filter(email=current_user.email)
     return render(request, 'user/profile.html', {'user': user})
 
 def about(request):

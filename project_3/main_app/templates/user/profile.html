@@ -5,8 +5,8 @@
 <h1>profile</h1>
 
 {% for user in user %}
-    <p>{{ user.email }}</p>
     <p>{{ user.name }}</p>
+    <p>{{ user.email }}</p>
     {% for skill in user.skills.all %}
         <p>{{ skill.name }}</p>
     {% endfor %}
