@@ -8,7 +8,7 @@ from .models import MyUser, Skill
 import requests
 
 #json that returns everything related to software engineering jobs 
-response = requests.get('https://api.adzuna.com/v1/api/jobs/us/search/1?app_id=ce87f4ab&app_key=ccee3366b025e6a97efaa9026117aa9f&results_per_page=200&what=software')
+response = requests.get('https://api.adzuna.com/v1/api/jobs/us/search/1?app_id=d77f8a15&app_key=cfbfca3c016e2c88fb67412299052d58&results_per_page=200&what=software')
 
 # from django.contrib.auth.backends import BaseBackend
 
@@ -54,22 +54,28 @@ def job_listings(request):
         return render(request, 'job/job_listings.html', {'results_list': results_list})
 
 
-def job_matches(request):
-    
+def job_matches(request): 
     #json is a json dictionary that has parsed the request object
     json = response.json()
     #results is an array that (in this case) contains additional dictionaries 
     results = json['results']
-
     matches = []
-    skills = ['python', 'java', 'html'] 
-    
+    current_user = request.user
+    user = MyUser.objects.filter(id=current_user.id)
+    t = user.values_list('skills')
+    skills = Skill.objects.filter(id__in = t)
+    # list of all user skills
+    skill_list = []
+    for i in skills:
+        skill_list.append(str(i))
+    # list of all skill matches
+    matches = []
+    # iterates
     for i in results:
-        for s in skills:
-            if (i['description'].lower().__contains__(s)):
-                matches.append(i['description'])
-                break
-
+        for j in skill_list:
+            if (i['description'].lower().__contains__(j)):
+                matches.append(i)
+                break 
     return render(request, 'user/job_matches.html', {'matches': matches})
 
 def saved_jobs(request):
@@ -77,11 +83,14 @@ def saved_jobs(request):
 
 def profile(request):
     current_user = request.user
-    user = MyUser.objects.filter(email=current_user.email)
+    user = MyUser.objects.filter(id=current_user.id)
     return render(request, 'user/profile.html', {'user': user})
+
 
 def about(request):
     return render(request, 'about.html')
+
+
 
 
 
