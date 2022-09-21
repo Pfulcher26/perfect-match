@@ -61,6 +61,10 @@ def job_matches(request):
     #results is an array that (in this case) contains additional dictionaries 
     results = json['results']
 
+    current_user = request.user
+    user = MyUser.objects.filter(email=current_user.email)
+    print(f"CURRENTSKILLS {user}") 
+
     matches = []
     skills = ['python', 'java', 'html'] 
     
@@ -77,7 +81,9 @@ def saved_jobs(request):
 
 def profile(request):
     current_user = request.user
-    user = MyUser.objects.filter(email=current_user.email)
+    user = MyUser.objects.filter(id=current_user.id)
+    t = user.values('skills')
+    print(f"CURRENTSKILLS {user.skills}") 
     return render(request, 'user/profile.html', {'user': user})
 
 def about(request):
