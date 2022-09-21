@@ -3,10 +3,13 @@
 {% block content %}
 
 <h1>profile</h1>
-<h2>skills</h2>
 
-{% for skill in skills %}
-<p>{{ skill.name }}</p>
+{% for user in user %}
+    <p>{{ user.email }}</p>
+    <p>{{ user.name }}</p>
+    {% for skill in user.skills.all %}
+        <p>{{ skill.name }}</p>
+    {% endfor %}
 {% endfor %}
 
 {% endblock %}

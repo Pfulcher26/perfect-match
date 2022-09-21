@@ -66,8 +66,8 @@ def saved_jobs(request):
     return render(request, 'user/saved_jobs.html')
 
 def profile(request):
-    skills = Skill.objects.all()
-    return render(request, 'user/profile.html', {'skills': skills})
+    user = MyUser.objects.all()
+    return render(request, 'user/profile.html', {'user': user})
 
 def about(request):
     return render(request, 'about.html')
