@@ -63,11 +63,11 @@ def job_matches(request):
     return HttpResponse(matches)
 
 def saved_jobs(request):
-    skills = Skill.objects.all()
-    return render(request, 'user/saved_jobs.html', {'skills': skills})
+    return render(request, 'user/saved_jobs.html')
 
 def profile(request):
-    return render(request, 'user/profile.html')
+    skills = Skill.objects.all()
+    return render(request, 'user/profile.html', {'skills': skills})
 
 def about(request):
     return render(request, 'about.html')

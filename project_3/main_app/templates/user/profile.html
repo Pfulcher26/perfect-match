@@ -1,6 +1,12 @@
 {% extends 'base.html' %}
 
-
 {% block content %}
+
 <h1>profile</h1>
+<h2>skills</h2>
+
+{% for skill in skills %}
+<p>{{ skill.name }}</p>
+{% endfor %}
+
 {% endblock %}
