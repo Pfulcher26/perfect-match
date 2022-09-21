@@ -1,5 +1,24 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<p>{{ matches }}</p>
+
+<h1>My Matches</h1>
+
+    {% for i in matches %}
+        <because of django templating you access dictionaries via . notation!--  -->
+        <div class="card">
+        <div class="card-content">
+        <p><span style="font-size: 3rem;">{{ i.title }}</span></p>
+        <p><span style="font-size: 2.5rem;">{{ i.company.display_name }}</span></span></p>
+        <p><span style="color:red">contract-length</span>: {{ i.contract_time }}</p>
+        <p><span style="color:red">label</span>: {{ i.category.label }}</p>  
+        <p><span style="color:red">salary</span>:{{ i.salary_min }}</p>
+        <p><span style="color:red">description</span>:{{ i.description }}</p>
+        <p><span style="color:red">location:</span> {{ i.location.display_name }}</p>
+        <p><span style="color:red">job id:</span> {{ i.id }}</p> 
+        <a href='{{ i.redirect_url }}'>go to listing</a>
+    </div>
+        </div>
+    {% endfor %}
+
 {% endblock %}
