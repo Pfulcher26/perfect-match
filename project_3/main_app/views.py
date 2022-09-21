@@ -1,9 +1,12 @@
 from http.client import HTTPResponse
+from re import X
 from django.http import HttpResponse
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse
 from django.shortcuts import render, redirect
+
+from main_app.forms import SkillForm
 from .models import MyUser, Skill
 import requests
 # login imports 
@@ -73,7 +76,7 @@ def job_listings(request):
         # renders the html with the results list 
         return render(request, 'job/job_listings.html', {'results_list': results_list})
 
-
+@login_required
 def job_matches(request): 
     #json is a json dictionary that has parsed the request object
     json = response.json()
@@ -102,16 +105,40 @@ def job_matches(request):
 def saved_jobs(request):
     return render(request, 'user/saved_jobs.html')
 
+@login_required
 def profile(request):
-    current_user = request.user
-    user = MyUser.objects.filter(id=current_user.id)
-    return render(request, 'user/profile.html', {'user': user})
 
+    myuser = MyUser.objects.get(id=request.user.id)
+
+    skill_form = SkillForm()
+    user = request.user
+    current_user = MyUser.objects.filter(id=user.id)
+    t = current_user.values_list('skills')
+    skills = Skill.objects.filter(id__in = t)
+    user_skills = []
+    for i in skills:
+        user_skills.append(str(i))
+        
+    return render(request, 'user/profile.html', {'user': user, 'user_skills': user_skills, 'skill_form': skill_form, 'myuser': myuser})
+
+def add_skill(request, user_id):
+
+    form = SkillForm(request.POST)
+    if form.is_valid():
+        new_skill = form.save(commit=False)
+        new_skill.user_id = user_id
+        print(new_skill)
+        new_skill.save()
+
+        x = MyUser.objects.get(id=user_id).skills.add(new_skill.id)
+        print('this is x', x)
+       
+
+    # MyUser.objects.get(id=skill_id).toys.add(toy_id)
+        return redirect('profile')
 
 def about(request):
     return render(request, 'about.html')
-
-
 
 
 
@@ -141,10 +168,6 @@ def about(request):
 #  for i in results:
     #     if ()
     #     print(i['description'])
-
-
-
-
 
 
 # def Home(request):

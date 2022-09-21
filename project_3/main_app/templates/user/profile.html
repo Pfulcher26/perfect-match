@@ -1,15 +1,20 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% block content %}
 
-{% block content %}
+<h3>Profile</h3>
 
-<h1>profile</h1>
+<form action="{% url 'add_skill' user.id %}" method="POST">
+  {% csrf_token %} {{ skill_form.as_p }}
+  <input type="submit" class="btn" value="Add Skill" />
+</form>
 
-{% for user in user %}
-    <p>{{ user.name }}</p>
-    <p>{{ user.email }}</p>
-    {% for skill in user.skills.all %}
-        <p>{{ skill.name }}</p>
-    {% endfor %}
+{% for skill in myuser.skill_set.all %}
+<tr>
+  <td>{{ skill.name }}</td>
+</tr>
 {% endfor %}
 
-{% endblock %}
+<p>{{ user.name }}</p>
+<p>{{ user.email }}</p>
+{% for skill in user.skills.all %}
+<p>{{ skill.name }}</p>
+{% endfor %} {% endblock %}
