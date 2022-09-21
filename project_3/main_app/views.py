@@ -9,9 +9,16 @@ from django.shortcuts import render, redirect
 from main_app.forms import SkillForm
 from .models import MyUser, Skill
 import requests
+# login imports 
+from django.contrib.auth import login
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+
 
 #json that returns everything related to software engineering jobs 
-response = requests.get('https://api.adzuna.com/v1/api/jobs/us/search/1?app_id=ce87f4ab&app_key=ccee3366b025e6a97efaa9026117aa9f&results_per_page=200&what=software')
+response = requests.get('https://api.adzuna.com/v1/api/jobs/us/search/1?app_id=d77f8a15&app_key=cfbfca3c016e2c88fb67412299052d58&results_per_page=200&what=software')
 
 # from django.contrib.auth.backends import BaseBackend
 
@@ -36,11 +43,24 @@ Headers = {
 def home(request):
     return render(request, 'home.html')
 
-def log_in(request):
-    return render(request, 'registration/log_in.html')
-
 def sign_up(request):
-    return render(request, 'registration/sign_up.html')
+  error_message = ''
+  if request.method == 'POST':
+    # This is how to create a 'user' form object
+    # that includes the data from the browser
+    form = UserCreationForm(request.POST)
+    if form.is_valid():
+      # This will add the user to the database
+      user = form.save()
+      # This is how we log a user in via code
+      login(request, user)
+      return redirect('about')
+    else:
+      error_message = 'Invalid sign up - try again'
+  # A bad POST or a GET request, so render signup.html with an empty form
+  form = UserCreationForm()
+  context = {'form': form, 'error_message': error_message}
+  return render(request, 'registration/signup.html', context)
 
 def job_listings(request):
         # Look into refactoring 
@@ -56,46 +76,41 @@ def job_listings(request):
         # renders the html with the results list 
         return render(request, 'job/job_listings.html', {'results_list': results_list})
 
-
-def job_matches(request):
-    
+@login_required
+def job_matches(request): 
     #json is a json dictionary that has parsed the request object
     json = response.json()
     #results is an array that (in this case) contains additional dictionaries 
     results = json['results']
-
     matches = []
-
-    skill_ids = MyUser.objects.all().values_list('skills')
-    current_user_skills = Skill.objects.filter(id__in = skill_ids)
-
-    skills_list = []
-
-    for i in current_user_skills:
-        skills_list.append(i)
-
-
-    print("this is skills_list", skills_list)
-
-    skills = ['python', 'java', 'html'] 
-    
+    current_user = request.user
+    user = MyUser.objects.filter(id=current_user.id)
+    t = user.values_list('skills')
+    skills = Skill.objects.filter(id__in = t)
+    # list of all user skills
+    skill_list = []
+    for i in skills:
+        skill_list.append(str(i))
+    # list of all skill matches
+    matches = []
+    # iterates
     for i in results:
-        for s in skills:
-            if (i['description'].lower().__contains__(s)):
-                matches.append(i['description'])
-                break
-
+        for j in skill_list:
+            if (i['description'].lower().__contains__(j)):
+                matches.append(i)
+                break 
     return render(request, 'user/job_matches.html', {'matches': matches})
 
+@login_required
 def saved_jobs(request):
     return render(request, 'user/saved_jobs.html')
 
+@login_required
 def profile(request):
 
     myuser = MyUser.objects.get(id=request.user.id)
 
     skill_form = SkillForm()
-
     user = request.user
     current_user = MyUser.objects.filter(id=user.id)
     t = current_user.values_list('skills')
@@ -105,7 +120,7 @@ def profile(request):
         user_skills.append(str(i))
         
     return render(request, 'user/profile.html', {'user': user, 'user_skills': user_skills, 'skill_form': skill_form, 'myuser': myuser})
-    
+
 def add_skill(request, user_id):
 
     form = SkillForm(request.POST)
@@ -121,31 +136,6 @@ def add_skill(request, user_id):
 
     # MyUser.objects.get(id=skill_id).toys.add(toy_id)
         return redirect('profile')
-
-    #, user_id=user_id
-
-
-    # current_user_id = request.user.id
-
-    # #display the user skills
-    # print("this is current user id", current_user_id)
-    # skill_ids = MyUser.objects.filter(id=current_user_id).values_list('skills')
-    # print('this is skill_ids', skill_ids)
-    # current_user_skills = Skill.objects.filter(id__in = skill_ids)
-    # print('this is curren_user_skills', current_user_skills)
-    # # print('this is first index', current_user_skills.Skill[0])
-
-    # skills_list = []
-
-    # # for i in current_user_skills:
-    # #     skills_list.append(current_user_skills[i])
-
-
-    # print("this is skills_list", skills_list)
-
-    # # user = MyUser.objects.filter(email=current_user.email)
-    #  return render(request, 'user/profile.html')
-    # #    return render(request, 'user/profile.html', {'user': user})
 
 def about(request):
     return render(request, 'about.html')
@@ -178,10 +168,6 @@ def about(request):
 #  for i in results:
     #     if ()
     #     print(i['description'])
-
-
-
-
 
 
 # def Home(request):
