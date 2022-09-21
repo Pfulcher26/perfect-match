@@ -1,4 +1,5 @@
 from http.client import HTTPResponse
+from re import X
 from django.http import HttpResponse
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -91,6 +92,8 @@ def saved_jobs(request):
 
 def profile(request):
 
+    myuser = MyUser.objects.get(id=request.user.id)
+
     skill_form = SkillForm()
 
     user = request.user
@@ -101,7 +104,7 @@ def profile(request):
     for i in skills:
         user_skills.append(str(i))
         
-    return render(request, 'user/profile.html', {'user': user, 'user_skills': user_skills, 'skill_form': skill_form})
+    return render(request, 'user/profile.html', {'user': user, 'user_skills': user_skills, 'skill_form': skill_form, 'myuser': myuser})
     
 def add_skill(request, user_id):
 
@@ -111,7 +114,13 @@ def add_skill(request, user_id):
         new_skill.user_id = user_id
         print(new_skill)
         new_skill.save()
-    return redirect('profile')
+
+        x = MyUser.objects.get(id=user_id).skills.add(new_skill.id)
+        print('this is x', x)
+       
+
+    # MyUser.objects.get(id=skill_id).toys.add(toy_id)
+        return redirect('profile')
 
     #, user_id=user_id
 

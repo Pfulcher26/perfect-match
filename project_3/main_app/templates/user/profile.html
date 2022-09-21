@@ -1,11 +1,17 @@
 {% extends 'base.html' %} {% block content %}
 
-<h1>profile</h1>
+<h3>Profile</h3>
 
 <form action="{% url 'add_skill' user.id %}" method="POST">
   {% csrf_token %} {{ skill_form.as_p }}
   <input type="submit" class="btn" value="Add Skill" />
 </form>
+
+{% for skill in myuser.skill_set.all %}
+<tr>
+  <td>{{ skill.name }}</td>
+</tr>
+{% endfor %}
 
 <p>{{ user.name }}</p>
 <p>{{ user.email }}</p>
