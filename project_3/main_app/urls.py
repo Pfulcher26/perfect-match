@@ -10,7 +10,7 @@ urlpatterns = [
     path('job-matches/', views.job_matches, name='job_matches'),
     path('saved-jobs/', views.saved_jobs, name='saved_jobs'),
     path('profile/', views.profile, name='profile'),
-    # path('profile/add-skills', views.add_skills, name='profile')
+    path('profile/<int:user_id>/add-skill/', views.add_skill, name='add_skill'),
     path('about/', views.about, name = 'about'),
 ]
 

@@ -2,6 +2,11 @@
 
 <h1>profile</h1>
 
+<form action="{% url 'add_skill' user.id %}" method="POST">
+  {% csrf_token %} {{ skill_form.as_p }}
+  <input type="submit" class="btn" value="Add Skill" />
+</form>
+
 <p>{{ user.name }}</p>
 <p>{{ user.email }}</p>
 {% for skill in user.skills.all %}

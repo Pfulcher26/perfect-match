@@ -4,6 +4,8 @@ from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse
 from django.shortcuts import render, redirect
+
+from main_app.forms import SkillForm
 from .models import MyUser, Skill
 import requests
 
@@ -89,6 +91,8 @@ def saved_jobs(request):
 
 def profile(request):
 
+    skill_form = SkillForm()
+
     user = request.user
     current_user = MyUser.objects.filter(id=user.id)
     t = current_user.values_list('skills')
@@ -97,8 +101,19 @@ def profile(request):
     for i in skills:
         user_skills.append(str(i))
         
-    return render(request, 'user/profile.html', {'user': user, 'user_skills': user_skills})
+    return render(request, 'user/profile.html', {'user': user, 'user_skills': user_skills, 'skill_form': skill_form})
     
+def add_skill(request, user_id):
+
+    form = SkillForm(request.POST)
+    if form.is_valid():
+        new_skill = form.save(commit=False)
+        new_skill.user_id = user_id
+        print(new_skill)
+        new_skill.save()
+    return redirect('profile')
+
+    #, user_id=user_id
 
 
     # current_user_id = request.user.id
