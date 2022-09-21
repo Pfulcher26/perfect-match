@@ -4,6 +4,7 @@ from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse
 from django.shortcuts import render, redirect
+from .models import MyUser, Skill
 import requests
 
 #json that returns everything related to software engineering jobs 
@@ -62,7 +63,8 @@ def job_matches(request):
     return HttpResponse(matches)
 
 def saved_jobs(request):
-    return render(request, 'user/saved_jobs.html')
+    skills = Skill.objects.all()
+    return render(request, 'user/saved_jobs.html', {'skills': skills})
 
 def profile(request):
     return render(request, 'user/profile.html')
