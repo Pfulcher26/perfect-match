@@ -8,7 +8,7 @@ from .models import MyUser, Skill
 import requests
 
 #json that returns everything related to software engineering jobs 
-response = requests.get('https://api.adzuna.com/v1/api/jobs/us/search/1?app_id=ce87f4ab&app_key=ccee3366b025e6a97efaa9026117aa9f&results_per_page=200&what=software')
+response = requests.get('https://api.adzuna.com/v1/api/jobs/us/search/1?app_id=177ec933&app_key=e386235bc03cab32af619d4170578653&results_per_page=200&what=software')
 
 # from django.contrib.auth.backends import BaseBackend
 
@@ -58,16 +58,28 @@ def job_matches(request):
     
     #json is a json dictionary that has parsed the request object
     json = response.json()
-    #results is an array that (in this case) contains additional dictionaries 
+    # results is an array that (in this case) contains additional dictionaries 
     results = json['results']
-
+    # current_user = request.user
+    skills_arr = []
     matches = []
-    skills = ['python', 'java', 'html'] 
-    
+    # t = MyUser.objects.all().values_list('skills')
+    # current_user = MyUser.objects.get(id__in = t)
+    # skills = current_user.skills
+    # print(t)
+
+
+    user = MyUser.objects.get(name="test2")
+    skills_user_has = Skill.objects.filter(id__in = user.skills.all().values_list('id'))
+    # print(skills_user_has)
+
+    for s in skills_user_has:
+        skills_arr.append(str(s))
+
     for i in results:
-        for s in skills:
-            if (i['description'].lower().__contains__(s)):
-                matches.append(i['description'])
+        for j in skills_arr:
+            if (i['description'].lower().__contains__(j)):
+                matches.append(i)
                 break
 
     return render(request, 'user/job_matches.html', {'matches': matches})
