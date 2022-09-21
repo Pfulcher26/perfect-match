@@ -16,7 +16,8 @@
         <p><span style="color:red">description</span>:{{ i.description }}</p>
         <p><span style="color:red">location:</span> {{ i.location.display_name }}</p>
         <p><span style="color:red">job id:</span> {{ i.id }}</p> 
-        </div>
+        <a href='{{ i.redirect_url }}'>go to listing</a>
+    </div>
         </div>
     {% endfor %}
 
