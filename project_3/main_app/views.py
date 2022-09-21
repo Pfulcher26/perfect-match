@@ -6,7 +6,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse
 from django.shortcuts import render, redirect
 
-from main_app.forms import SkillForm
+from main_app.forms import SkillForm, CustomUserCreationForm
 from .models import MyUser, Skill
 import requests
 # login imports 
@@ -43,22 +43,22 @@ Headers = {
 def home(request):
     return render(request, 'home.html')
 
-def sign_up(request):
+def signup(request):
   error_message = ''
   if request.method == 'POST':
     # This is how to create a 'user' form object
     # that includes the data from the browser
-    form = UserCreationForm(request.POST)
+    form = CustomUserCreationForm(request.POST)
     if form.is_valid():
       # This will add the user to the database
       user = form.save()
       # This is how we log a user in via code
       login(request, user)
-      return redirect('about')
+      return redirect('home')
     else:
       error_message = 'Invalid sign up - try again'
   # A bad POST or a GET request, so render signup.html with an empty form
-  form = UserCreationForm()
+  form = CustomUserCreationForm()
   context = {'form': form, 'error_message': error_message}
   return render(request, 'registration/signup.html', context)
 
@@ -107,9 +107,7 @@ def saved_jobs(request):
 
 @login_required
 def profile(request):
-
     myuser = MyUser.objects.get(id=request.user.id)
-
     skill_form = SkillForm()
     user = request.user
     current_user = MyUser.objects.filter(id=user.id)
