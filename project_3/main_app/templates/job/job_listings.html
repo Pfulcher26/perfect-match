@@ -4,6 +4,19 @@
 
 <h1>job listings</h1>
 
-    <p>{{ result }}</p>
+    {% for i in results_list %}
+        <because of django templating you access dictionaries via . notation!--  -->
+        <p>{{ i.contract_time }}</p>
+        <p>{{ i.title }}</p>
+        <p>{{ i.category.label }}</p>  
+        <p>{{ i.salary_min }}</p>
+        <p>{{ i.salary_max }}</p>
+        <p>{{ i.description }}</p>
+        <p>{{ i.location.display_name }}</p>
+        <p>{{ i.id }}</p>
+        <p>{{ i.company.display_name }}</p> 
+
+
+    {% endfor %}
 
 {% endblock %}
