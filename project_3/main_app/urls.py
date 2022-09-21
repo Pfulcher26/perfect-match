@@ -10,6 +10,7 @@ urlpatterns = [
     path('job-matches/', views.job_matches, name='job_matches'),
     path('saved-jobs/', views.saved_jobs, name='saved_jobs'),
     path('profile/', views.profile, name='profile'),
+    # path('profile/add-skills', views.add_skills, name='profile')
     path('about/', views.about, name = 'about'),
 ]
 

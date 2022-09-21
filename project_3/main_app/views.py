@@ -62,6 +62,18 @@ def job_matches(request):
     results = json['results']
 
     matches = []
+
+    skill_ids = MyUser.objects.all().values_list('skills')
+    current_user_skills = Skill.objects.filter(id__in = skill_ids)
+
+    skills_list = []
+
+    for i in current_user_skills:
+        skills_list.append(i)
+
+
+    print("this is skills_list", skills_list)
+
     skills = ['python', 'java', 'html'] 
     
     for i in results:
@@ -76,9 +88,40 @@ def saved_jobs(request):
     return render(request, 'user/saved_jobs.html')
 
 def profile(request):
-    current_user = request.user
-    user = MyUser.objects.filter(email=current_user.email)
-    return render(request, 'user/profile.html', {'user': user})
+
+    user = request.user
+    current_user = MyUser.objects.filter(id=user.id)
+    t = current_user.values_list('skills')
+    skills = Skill.objects.filter(id__in = t)
+    user_skills = []
+    for i in skills:
+        user_skills.append(str(i))
+        
+    return render(request, 'user/profile.html', {'user': user, 'user_skills': user_skills})
+    
+
+
+    # current_user_id = request.user.id
+
+    # #display the user skills
+    # print("this is current user id", current_user_id)
+    # skill_ids = MyUser.objects.filter(id=current_user_id).values_list('skills')
+    # print('this is skill_ids', skill_ids)
+    # current_user_skills = Skill.objects.filter(id__in = skill_ids)
+    # print('this is curren_user_skills', current_user_skills)
+    # # print('this is first index', current_user_skills.Skill[0])
+
+    # skills_list = []
+
+    # # for i in current_user_skills:
+    # #     skills_list.append(current_user_skills[i])
+
+
+    # print("this is skills_list", skills_list)
+
+    # # user = MyUser.objects.filter(email=current_user.email)
+    #  return render(request, 'user/profile.html')
+    # #    return render(request, 'user/profile.html', {'user': user})
 
 def about(request):
     return render(request, 'about.html')
