@@ -73,7 +73,7 @@ def job_listings(request):
         # renders the html with the results list 
         return render(request, 'job/job_listings.html', {'results_list': results_list})
 
-
+@login_required
 def job_matches(request): 
     #json is a json dictionary that has parsed the request object
     json = response.json()
@@ -102,6 +102,7 @@ def job_matches(request):
 def saved_jobs(request):
     return render(request, 'user/saved_jobs.html')
 
+@login_required
 def profile(request):
     current_user = request.user
     user = MyUser.objects.filter(id=current_user.id)
