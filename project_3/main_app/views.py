@@ -6,6 +6,13 @@ from django.urls import reverse
 from django.shortcuts import render, redirect
 from .models import MyUser, Skill
 import requests
+# login imports 
+from django.contrib.auth import login
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+
 
 #json that returns everything related to software engineering jobs 
 response = requests.get('https://api.adzuna.com/v1/api/jobs/us/search/1?app_id=d77f8a15&app_key=cfbfca3c016e2c88fb67412299052d58&results_per_page=200&what=software')
@@ -33,11 +40,24 @@ Headers = {
 def home(request):
     return render(request, 'home.html')
 
-def log_in(request):
-    return render(request, 'registration/log_in.html')
-
 def sign_up(request):
-    return render(request, 'registration/sign_up.html')
+  error_message = ''
+  if request.method == 'POST':
+    # This is how to create a 'user' form object
+    # that includes the data from the browser
+    form = UserCreationForm(request.POST)
+    if form.is_valid():
+      # This will add the user to the database
+      user = form.save()
+      # This is how we log a user in via code
+      login(request, user)
+      return redirect('about')
+    else:
+      error_message = 'Invalid sign up - try again'
+  # A bad POST or a GET request, so render signup.html with an empty form
+  form = UserCreationForm()
+  context = {'form': form, 'error_message': error_message}
+  return render(request, 'registration/signup.html', context)
 
 def job_listings(request):
         # Look into refactoring 
@@ -78,6 +98,7 @@ def job_matches(request):
                 break 
     return render(request, 'user/job_matches.html', {'matches': matches})
 
+@login_required
 def saved_jobs(request):
     return render(request, 'user/saved_jobs.html')
 
