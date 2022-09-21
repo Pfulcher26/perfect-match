@@ -4,10 +4,11 @@ from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse
 from django.shortcuts import render, redirect
+from .models import MyUser, Skill
 import requests
 
 #json that returns everything related to software engineering jobs 
-response = requests.get('https://api.adzuna.com/v1/api/jobs/gb/search/1?app_id=5e5f3287&app_key=1755dc772df12b9e7aa9c2a0885b6983&results_per_page=200&what=software')
+response = requests.get('https://api.adzuna.com/v1/api/jobs/us/search/1?app_id=ce87f4ab&app_key=ccee3366b025e6a97efaa9026117aa9f&results_per_page=200&what=software')
 
 # from django.contrib.auth.backends import BaseBackend
 
@@ -39,33 +40,45 @@ def sign_up(request):
     return render(request, 'registration/sign_up.html')
 
 def job_listings(request):
+        # Look into refactoring 
         #json is a json dictionary that has parsed the request object
         json = response.json()
         #results is an array that (in this case) contains additional dictionaries 
-        results = json['results']
-        return HttpResponse(results)
+        results = json['results'] 
+        # Creates a results list 
+        results_list = []
+        # appends all job descriptions to the list 
+        for i in results:
+            results_list.append(i)
+        # renders the html with the results list 
+        return render(request, 'job/job_listings.html', {'results_list': results_list})
 
-skills = ['python', 'java', 'html']
+
 def job_matches(request):
-    matches = []
+    
     #json is a json dictionary that has parsed the request object
     json = response.json()
     #results is an array that (in this case) contains additional dictionaries 
     results = json['results']
 
+    matches = []
+    skills = ['python', 'java', 'html'] 
+    
     for i in results:
         for s in skills:
             if (i['description'].lower().__contains__(s)):
                 matches.append(i['description'])
                 break
 
-    return HttpResponse(matches)
+    return render(request, 'user/job_matches.html', {'matches': matches})
 
 def saved_jobs(request):
     return render(request, 'user/saved_jobs.html')
 
 def profile(request):
-    return render(request, 'user/profile.html')
+    current_user = request.user
+    user = MyUser.objects.filter(email=current_user.email)
+    return render(request, 'user/profile.html', {'user': user})
 
 def about(request):
     return render(request, 'about.html')
@@ -111,4 +124,3 @@ def about(request):
 #      results = json['results']
 #      print('this is results variable', type(results))
 #      return HttpResponse(results[3]['location']['display_name'])
-     

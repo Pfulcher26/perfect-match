@@ -5,3 +5,4 @@ from .models import MyUser, Skill
 
 admin.site.register(MyUser)
 admin.site.register(Skill)
+

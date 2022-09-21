@@ -1,10 +1,9 @@
+from random import choices
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.contrib.postgres.fields import ArrayField
 from django import forms
 from django.urls import reverse
-
-
 
 # Create your models here.
 # class Skill(forms.Form):
@@ -25,7 +24,6 @@ class Skill(models.Model):
     # def get_absolute_url(self):
     #     return reverse('toys_detail', kwargs={'pk': self.id})
     
-    
 class MyUser(AbstractUser):
     email = models.EmailField(max_length=254, unique=True)
     name = models.CharField(max_length=254, null=True, blank=True)
@@ -35,7 +33,6 @@ class MyUser(AbstractUser):
     last_login = models.DateTimeField(null=True, blank=True)
     date_joined = models.DateTimeField(auto_now_add=True)
     skills = models.ManyToManyField(Skill)
-
 
 
 
