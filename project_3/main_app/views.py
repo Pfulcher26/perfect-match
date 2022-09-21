@@ -43,8 +43,8 @@ def job_listings(request):
         #json is a json dictionary that has parsed the request object
         json = response.json()
         #results is an array that (in this case) contains additional dictionaries 
-        results = json['results']
-        return HttpResponse(results)
+        result = json['results'][0]['description']
+        return render(request, 'job/job_listings.html', {'result': result})
 
 skills = ['python', 'java', 'html']
 def job_matches(request):
