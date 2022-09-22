@@ -1,8 +1,20 @@
 {% extends 'base.html' %} {% block content %}
 
-<form action="{% url 'add_skill' user.id %}" method="POST">
+<form action="{% url 'add_initial_skills' user.id %}" method="POST">
   {% csrf_token %} {{ skill_form.as_p }}
   <input type="submit" class="btn" value="Add Skill" />
+</form>
+
+{% for skill in user.skills.all %}
+<p>{{ skill.name }}</p>
+{% endfor %}
+
+<form action="{% url 'about' %}" method="post">
+  {% csrf_token %}
+
+  <button type="submit" name="btn2" value="submit skills">
+    Submit Skills
+  </button>
 </form>
 
 {% endblock %}

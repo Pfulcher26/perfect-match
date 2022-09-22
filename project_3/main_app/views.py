@@ -54,6 +54,7 @@ def signup(request):
       user = form.save()
       # This is how we log a user in via code
       login(request, user)
+      print('this is user_id inside signup', request.user.id)
       return redirect('initial_skills', user_id = request.user.id)
     else:
       error_message = 'Invalid sign up - try again'
@@ -65,7 +66,24 @@ def signup(request):
 
 def initial_skills(request, user_id):
     skill_form = SkillForm()
-    return render(request, 'registration/initial_skills.html', {'skill_form': skill_form, 'user_id': user_id})
+    print('this is user_id inside initial_skills', user_id)
+    myuser = MyUser.objects.get(id=user_id)
+    print('this is my user inside initial skills', myuser)
+    user = request.user
+    return render(request, 'registration/initial_skills.html', {'skill_form': skill_form, 'user_id': user_id, 'myuser': myuser, 'user': user})
+
+def add_initial_skills(request, user_id):
+    form = SkillForm(request.POST)
+    if form.is_valid():
+        new_skill = form.save(commit=False)
+        new_skill.user_id = user_id
+        print(new_skill)
+        new_skill.save()
+
+        x = MyUser.objects.get(id=user_id).skills.add(new_skill.id)
+        print('this is x', x)
+
+        return redirect('initial_skills', user_id = user_id)
 
 def job_listings(request):
         # Look into refactoring 
