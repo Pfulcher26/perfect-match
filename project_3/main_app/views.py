@@ -6,7 +6,7 @@ from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse
 from django.shortcuts import render, redirect
-from .models import MyUser, Skill, Job
+from .models import Job_listing, MyUser, Skill, Job
 from main_app.forms import SkillForm, CustomUserCreationForm
 from .models import MyUser, Skill
 import requests
@@ -21,7 +21,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 #json that returns everything related to software engineering jobs 
 
 ## needs to go in env
-response = requests.get('https://api.adzuna.com/v1/api/jobs/us/search/1?app_id=12ac3d54&app_key=bb7dceaa8aa530e86526c3070698b99c&results_per_page=200&what=python')
+response = requests.get('https://api.adzuna.com/v1/api/jobs/us/search/1?app_id=12ac3d54&app_key=bb7dceaa8aa530e86526c3070698b99c&results_per_page=200&what=web_developer')
 
 job_list = []
 saved_list = []
@@ -77,13 +77,24 @@ def job_listings(request):
         results = json['results'] 
         # Creates a results list 
         results_list = []
-        # appends all job descriptions to the list 
-        for i in results:
-            results_list.append(i)
-            new_object = Job(i['description'], i['title'], i['company'], i['category'], i['location'], i['id'], i['redirect_url'])
+  
+        for i in results:       
+            # test = Job.objects.get(job_id.__contains__(i['id']))
+            # print(test)
+            # id = i['id']
+            # final_jobs = Job.objects.filter(id__in = x)
+            if Job.objects.filter(job_id=i['id']).exists():
+                pass
+            else:
+                new_object = Job.objects.create(description = i['description'],title = i['title'],company_display_name = i['company'],category_label= i['category'], location_display_name =i['location'],  job_id = i['id'],job_posting_url = i['redirect_url'])
+                new_object.save()
+                job_list.append(new_object)
+
             
-            job_list.append(new_object)
-            
+            # new_job = Job.objects.create(description =i['description'], title = i['title'], company_display_name = i['company'],category_label= i['category'], location_display_name = i['location'], job_id = i['id'],job_posting_url = i['redirect_url'])
+            # new_job.save()
+        # print(job_list)
+        results_list = Job.objects.all()
         # renders the html with the results list 
         return render(request, 'job/job_listings.html', {'results_list': results_list})
 
@@ -119,7 +130,8 @@ def saved_jobs(request, job_id):
     for i in job_list:
         if str(job_id) == str(i.job_id):
             # saved_list.append(i)
-            myuser.saved_jobs.append(i)
+            i.id = myuser.id
+            print(i.id)
             myuser.save()
             break
 
@@ -162,14 +174,20 @@ def add_skill(request, user_id):
        
 def searchbar(request):
         matched_arr = []
+        final_arr = []
         if request.method == 'GET':
             search = request.GET.get('search')
+            test_list = Job.objects.all().values_list('description', 'job_id')
+            for i in test_list:
+                if i[0].__contains__(search):
+                    matched_arr.append(Job.objects.filter(job_id = i[1]))
+        # print(matched_arr)
+        for i in matched_arr:
+            final_arr.append(i[0])
 
-            for i in job_list:
-                if i.description.lower().__contains__(search):
-                    matched_arr.append(i)
 
-        return render(request, "job/searchbar.html", {'matched_arr': matched_arr})
+
+        return render(request, "job/searchbar.html", {'matched_arr': final_arr})
 
 
 def about(request):
