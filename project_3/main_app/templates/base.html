@@ -19,16 +19,18 @@
             <a href="/" class="left brand-logo">&nbsp;&nbsp;Perfect.Match()</a>
             <a href="#" data-target="mobile-demo" class="sidenav-trigger "><i class="material-icons">menu</i></a>
             <ul class="right">
-            {% if user.is_authenticated %}
-                <li><a href="{% url 'job_listings' %}">Job Listings</a></li>
-                <li><a href="{% url 'job_matches' %}">Job Matches</a></li> 
-                <li><a href="{% url 'saved_jobs' %}">Saved Jobs</a></li>
-                <li><a href="{% url 'profile' %}">Profile</a></li>
-                <li><a href="{% url 'logout' %}">Log Out</a></li>
-            {% else %}
-                <li><a href="{% url 'login' %}">Log in</a></li>
-                <li><a href="{% url 'signup' %}">Sign up</a></li>
-            {% endif %}
+            <div class="navbar-to-disappear">
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'job_listings' %}">Job Listings</a></li>
+                    <li><a href="{% url 'job_matches' %}">Job Matches</a></li> 
+                    <li><a href="{% url 'saved_jobs' %}">Saved Jobs</a></li>
+                    <li><a href="{% url 'profile' %}">Profile</a></li>
+                    <li><a href="{% url 'logout' %}">Log Out</a></li>
+                {% else %}
+                    <li><a href="{% url 'login' %}">Log in</a></li>
+                    <li><a href="{% url 'signup' %}">Sign up</a></li>
+                {% endif %}
+            </div>    
             </ul>
         </div>
         </nav>
