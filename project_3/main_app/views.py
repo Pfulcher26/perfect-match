@@ -100,7 +100,7 @@ def job_matches(request):
     # iterates
     for i in results:
         for j in skill_list:
-            if (i['description'].lower().__contains__(j)):
+            if (i['description'].lower().__contains__(j.lower())):
                 matches.append(i)
                 break 
     return render(request, 'user/job_matches.html', {'matches': matches})
@@ -134,7 +134,8 @@ def add_skill(request, user_id):
 
         x = MyUser.objects.get(id=user_id).skills.add(new_skill.id)
         print('this is x', x)
-       
+        return redirect('profile')
+        
 def searchbar(request):
         matched_arr = []
         if request.method == 'GET':
