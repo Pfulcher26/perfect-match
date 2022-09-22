@@ -1,0 +1,8 @@
+{% extends 'base.html' %} {% block content %}
+
+<form action="{% url 'add_skill' user.id %}" method="POST">
+  {% csrf_token %} {{ skill_form.as_p }}
+  <input type="submit" class="btn" value="Add Skill" />
+</form>
+
+{% endblock %}

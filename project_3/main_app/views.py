@@ -54,13 +54,18 @@ def signup(request):
       user = form.save()
       # This is how we log a user in via code
       login(request, user)
-      return redirect('home')
+      return redirect('initial_skills', user_id = request.user.id)
     else:
       error_message = 'Invalid sign up - try again'
   # A bad POST or a GET request, so render signup.html with an empty form
   form = CustomUserCreationForm()
   context = {'form': form, 'error_message': error_message}
   return render(request, 'registration/signup.html', context)
+
+
+def initial_skills(request, user_id):
+    skill_form = SkillForm()
+    return render(request, 'registration/initial_skills.html', {'skill_form': skill_form, 'user_id': user_id})
 
 def job_listings(request):
         # Look into refactoring 
@@ -100,7 +105,7 @@ def job_matches(request):
     # iterates
     for i in results:
         for j in skill_list:
-            if (i['description'].lower().__contains__(j)):
+            if (i['description'].lower().__contains__(j.lower())):
                 matches.append(i)
                 break 
     return render(request, 'user/job_matches.html', {'matches': matches})
@@ -134,6 +139,8 @@ def add_skill(request, user_id):
 
         x = MyUser.objects.get(id=user_id).skills.add(new_skill.id)
         print('this is x', x)
+
+        return redirect('profile')
        
 def searchbar(request):
         matched_arr = []
