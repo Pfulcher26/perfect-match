@@ -14,11 +14,11 @@ from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-
-
+# import os in order to us env 
+import os
 
 #json that returns everything related to software engineering jobs 
-response = requests.get('https://api.adzuna.com/v1/api/jobs/us/search/1?app_id=d77f8a15&app_key=cfbfca3c016e2c88fb67412299052d58&results_per_page=200&what=software')
+response = requests.get(f"https://api.adzuna.com/v1/api/jobs/us/search/1?app_id={os.environ['API_ID']}&app_key={os.environ['API_KEY']}&results_per_page=200&what=software")
 job_list = []
 # from django.contrib.auth.backends import BaseBackend
 
