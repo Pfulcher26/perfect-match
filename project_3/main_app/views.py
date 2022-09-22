@@ -1,11 +1,21 @@
 from http.client import HTTPResponse
+from re import X
 from django.http import HttpResponse
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse
 from django.shortcuts import render, redirect
 from .models import MyUser, Skill, Job
+from main_app.forms import SkillForm, CustomUserCreationForm
+from .models import MyUser, Skill
 import requests
+# login imports 
+from django.contrib.auth import login
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+
 
 #json that returns everything related to software engineering jobs 
 response = requests.get('https://api.adzuna.com/v1/api/jobs/us/search/1?app_id=d77f8a15&app_key=cfbfca3c016e2c88fb67412299052d58&results_per_page=200&what=software')
@@ -33,11 +43,24 @@ Headers = {
 def home(request):
     return render(request, 'home.html')
 
-def log_in(request):
-    return render(request, 'registration/log_in.html')
-
-def sign_up(request):
-    return render(request, 'registration/sign_up.html')
+def signup(request):
+  error_message = ''
+  if request.method == 'POST':
+    # This is how to create a 'user' form object
+    # that includes the data from the browser
+    form = CustomUserCreationForm(request.POST)
+    if form.is_valid():
+      # This will add the user to the database
+      user = form.save()
+      # This is how we log a user in via code
+      login(request, user)
+      return redirect('home')
+    else:
+      error_message = 'Invalid sign up - try again'
+  # A bad POST or a GET request, so render signup.html with an empty form
+  form = CustomUserCreationForm()
+  context = {'form': form, 'error_message': error_message}
+  return render(request, 'registration/signup.html', context)
 
 def job_listings(request):
         # Look into refactoring 
@@ -57,7 +80,7 @@ def job_listings(request):
         # renders the html with the results list 
         return render(request, 'job/job_listings.html', {'results_list': results_list})
 
-
+@login_required
 def job_matches(request): 
     #json is a json dictionary that has parsed the request object
     json = response.json()
@@ -82,18 +105,36 @@ def job_matches(request):
                 break 
     return render(request, 'user/job_matches.html', {'matches': matches})
 
+@login_required
 def saved_jobs(request):
     return render(request, 'user/saved_jobs.html')
 
+@login_required
 def profile(request):
-    current_user = request.user
-    user = MyUser.objects.filter(id=current_user.id)
-    return render(request, 'user/profile.html', {'user': user})
+    myuser = MyUser.objects.get(id=request.user.id)
+    skill_form = SkillForm()
+    user = request.user
+    current_user = MyUser.objects.filter(id=user.id)
+    t = current_user.values_list('skills')
+    skills = Skill.objects.filter(id__in = t)
+    user_skills = []
+    for i in skills:
+        user_skills.append(str(i))
+        
+    return render(request, 'user/profile.html', {'user': user, 'user_skills': user_skills, 'skill_form': skill_form, 'myuser': myuser})
 
+def add_skill(request, user_id):
 
-def about(request):
-    return render(request, 'about.html')
+    form = SkillForm(request.POST)
+    if form.is_valid():
+        new_skill = form.save(commit=False)
+        new_skill.user_id = user_id
+        print(new_skill)
+        new_skill.save()
 
+        x = MyUser.objects.get(id=user_id).skills.add(new_skill.id)
+        print('this is x', x)
+       
 def searchbar(request):
         matched_arr = []
         if request.method == 'GET':
@@ -102,11 +143,12 @@ def searchbar(request):
             for i in job_list:
                 if i.description.lower().__contains__(search):
                     matched_arr.append(i)
-                
-            
-            
+
         return render(request, "job/searchbar.html", {'matched_arr': matched_arr})
 
+
+def about(request):
+    return render(request, 'about.html')
 
 
 
@@ -136,10 +178,6 @@ def searchbar(request):
 #  for i in results:
     #     if ()
     #     print(i['description'])
-
-
-
-
 
 
 # def Home(request):
