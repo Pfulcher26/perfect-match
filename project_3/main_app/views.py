@@ -91,6 +91,14 @@ def add_initial_skills(request, user_id):
 
         return redirect('initial_skills', user_id = user_id)
 
+def delete_skill(request, user_id, skill_id):
+    print('this is user_id inside delete_skill', user_id)
+    Skill.objects.get(id=skill_id).delete()
+    x = MyUser.objects.get(id=user_id).skills.filter(id=skill_id)
+    x.delete()
+    print('this is skill_id inside delete_skill', skill_id)
+    return redirect('about')
+
 def job_listings(request):
         # Look into refactoring 
         #json is a json dictionary that has parsed the request object

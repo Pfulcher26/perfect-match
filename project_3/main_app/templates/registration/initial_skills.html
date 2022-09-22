@@ -7,6 +7,12 @@
 
 {% for skill in user.skills.all %}
 <p>{{ skill.name }}</p>
+<div class="card-action">
+  <form action="{% url 'delete_skill' user.id user.skill.id %}" method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn">X</button>
+  </form>
+</div>
 {% endfor %}
 
 <form action="{% url 'about' %}" method="post">
