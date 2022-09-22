@@ -159,7 +159,7 @@ def add_skill(request, user_id):
         print('this is x', x)
 
         return redirect('profile')
-       
+
 def searchbar(request):
         matched_arr = []
         if request.method == 'GET':

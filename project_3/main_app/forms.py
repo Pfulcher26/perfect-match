@@ -12,7 +12,7 @@ class SkillForm(ModelForm):
         fields = ['name']
 
 class CustomUserCreationForm(UserCreationForm):
-
-    class Meta(UserCreationForm.Meta):
+ 
+  class Meta(UserCreationForm.Meta):
         model = MyUser
         fields = UserCreationForm.Meta.fields + ('email',)
