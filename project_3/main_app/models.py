@@ -22,6 +22,7 @@ class MyUser(AbstractUser):
     last_login = models.DateTimeField(null=True, blank=True)
     date_joined = models.DateTimeField(auto_now_add=True)
     skills = models.ManyToManyField(Skill)
+    saved_jobs = []
 
 class Job():
     def __init__(self, description, title, company_display_name, category_label, location_display_name, job_id, redirect_url):
@@ -32,6 +33,7 @@ class Job():
         self.location_display_name = location_display_name
         self.job_id = job_id
         self.redirect_url = redirect_url
+        self.saved = False
 
 
         

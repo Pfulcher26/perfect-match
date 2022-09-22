@@ -1,5 +1,6 @@
 from http.client import HTTPResponse
 from re import X
+import re
 from django.http import HttpResponse
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -18,8 +19,14 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 #json that returns everything related to software engineering jobs 
-response = requests.get('https://api.adzuna.com/v1/api/jobs/us/search/1?app_id=d77f8a15&app_key=cfbfca3c016e2c88fb67412299052d58&results_per_page=200&what=software')
+
+## needs to go in env
+response = requests.get('https://api.adzuna.com/v1/api/jobs/us/search/1?app_id=12ac3d54&app_key=bb7dceaa8aa530e86526c3070698b99c&results_per_page=200&what=python')
+
 job_list = []
+saved_list = []
+user_list = []
+
 # from django.contrib.auth.backends import BaseBackend
 
 # from .models import User, Skill, Job, Company
@@ -100,14 +107,30 @@ def job_matches(request):
     # iterates
     for i in results:
         for j in skill_list:
-            if (i['description'].lower().__contains__(j)):
+            if (i['description'].lower().__contains__(j.lower())):
                 matches.append(i)
                 break 
     return render(request, 'user/job_matches.html', {'matches': matches})
 
 @login_required
-def saved_jobs(request):
-    return render(request, 'user/saved_jobs.html')
+def saved_jobs(request, job_id):
+    myuser = MyUser.objects.get(id=request.user.id)
+    print(myuser)
+    for i in job_list:
+        if str(job_id) == str(i.job_id):
+            # saved_list.append(i)
+            myuser.saved_jobs.append(i)
+            myuser.save()
+            break
+
+    # saved_list = request.user.saved_jobs
+    # request.user.save()
+    # print(request.user.saved_jobs)
+    return redirect('/saved-jobs')
+
+def saved_jobs_index(request):
+    myuser = MyUser.objects.get(id=request.user.id)
+    return render(request, 'user/saved_jobs.html', {'saved_list': myuser.saved_jobs})
 
 @login_required
 def profile(request):
@@ -134,6 +157,8 @@ def add_skill(request, user_id):
 
         x = MyUser.objects.get(id=user_id).skills.add(new_skill.id)
         print('this is x', x)
+
+    return redirect('profile')
        
 def searchbar(request):
         matched_arr = []
