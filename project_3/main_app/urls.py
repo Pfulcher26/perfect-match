@@ -11,5 +11,7 @@ urlpatterns = [
     path('saved-jobs/', views.saved_jobs, name='saved_jobs'),
     path('profile/', views.profile, name='profile'),
     path('about/', views.about, name = 'about'),
+    path('searchbar/', views.searchbar, name ='searchbar'),
+
 ]
 

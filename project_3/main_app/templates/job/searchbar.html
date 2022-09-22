@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<form action = "{% url 'searchbar' %}" method ="get">
+    <input type = 'text' name ='search'/> 
+    <button type = 'submit'>Search Bar</button>
+    
+</form>
+
+
+{% if matched_arr %}
+    <p>Test</p>
+    <a href = '/job-listings/'>Back to all job listings</a>
+    {% for i in matched_arr %}
+        <because of django templating you access dictionaries via . notation!--  -->
+            <div class="card">
+            <div class="card-content">
+            <p><span style="font-size: 3rem;">{{ i.title }}</span></p>
+            <p><span style="font-size: 2.5rem;">{{ i.company_display_name.display_name }}</span></span></p>
+            <p><span style="color:red">label</span>: {{ i.category_label.label }}</p> 
+            <p><span style="color:red">description</span>:{{ i.description }}</p>
+            <p><span style="color:red">location:</span> {{ i.location_display_name.display_name }}</p>
+            <p><span style="color:red">location:</span> {{ i.job_id }}</p>
+            <a href='{{ i.redirect_url }}'>go to listing</a>
+        </div>
+            </div>
+    {% endfor %}
+
+{% endif %}
+{% endblock %}
