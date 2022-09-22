@@ -5,7 +5,7 @@ from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse
 from django.shortcuts import render, redirect
-
+from .models import MyUser, Skill, Job
 from main_app.forms import SkillForm, CustomUserCreationForm
 from .models import MyUser, Skill
 import requests
@@ -19,7 +19,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 #json that returns everything related to software engineering jobs 
 response = requests.get('https://api.adzuna.com/v1/api/jobs/us/search/1?app_id=d77f8a15&app_key=cfbfca3c016e2c88fb67412299052d58&results_per_page=200&what=software')
-
+job_list = []
 # from django.contrib.auth.backends import BaseBackend
 
 # from .models import User, Skill, Job, Company
@@ -73,6 +73,10 @@ def job_listings(request):
         # appends all job descriptions to the list 
         for i in results:
             results_list.append(i)
+            new_object = Job(i['description'], i['title'], i['company'], i['category'], i['location'], i['id'], i['redirect_url'])
+            
+            job_list.append(new_object)
+            
         # renders the html with the results list 
         return render(request, 'job/job_listings.html', {'results_list': results_list})
 
@@ -131,9 +135,17 @@ def add_skill(request, user_id):
         x = MyUser.objects.get(id=user_id).skills.add(new_skill.id)
         print('this is x', x)
        
+def searchbar(request):
+        matched_arr = []
+        if request.method == 'GET':
+            search = request.GET.get('search')
 
-    # MyUser.objects.get(id=skill_id).toys.add(toy_id)
-        return redirect('profile')
+            for i in job_list:
+                if i.description.lower().__contains__(search):
+                    matched_arr.append(i)
+
+        return render(request, "job/searchbar.html", {'matched_arr': matched_arr})
+
 
 def about(request):
     return render(request, 'about.html')
