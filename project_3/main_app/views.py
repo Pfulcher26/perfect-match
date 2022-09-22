@@ -87,6 +87,9 @@ def add_initial_skills(request, user_id):
 
 def delete_skill(request, user_id, skill_id):
     print('this is user_id inside delete_skill', user_id)
+    Skill.objects.get(id=skill_id).delete()
+    x = MyUser.objects.get(id=user_id).skills.filter(id=skill_id)
+    x.delete()
     print('this is skill_id inside delete_skill', skill_id)
     return redirect('about')
 
