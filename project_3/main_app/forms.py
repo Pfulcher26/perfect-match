@@ -12,9 +12,7 @@ class SkillForm(ModelForm):
         fields = ['name']
 
 class CustomUserCreationForm(UserCreationForm):
-
-    email = forms.EmailField(max_length=30)
-
-    class Meta(UserCreationForm.Meta):
+ 
+  class Meta(UserCreationForm.Meta):
         model = MyUser
         fields = UserCreationForm.Meta.fields + ('email',)
