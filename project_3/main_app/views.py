@@ -15,13 +15,12 @@ from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-
-
+# import os in order to us env 
+import os
 
 #json that returns everything related to software engineering jobs 
 
-## needs to go in env
-response = requests.get('https://api.adzuna.com/v1/api/jobs/us/search/1?app_id=12ac3d54&app_key=bb7dceaa8aa530e86526c3070698b99c&results_per_page=200&what=web_developer')
+response = requests.get(f"https://api.adzuna.com/v1/api/jobs/us/search/1?app_id={os.environ['API_ID']}&app_key={os.environ['API_KEY']}&results_per_page=200&what=software")
 
 job_list = []
 saved_list = []
@@ -61,13 +60,36 @@ def signup(request):
       user = form.save()
       # This is how we log a user in via code
       login(request, user)
-      return redirect('home')
+      print('this is user_id inside signup', request.user.id)
+      return redirect('initial_skills', user_id = request.user.id)
     else:
       error_message = 'Invalid sign up - try again'
   # A bad POST or a GET request, so render signup.html with an empty form
   form = CustomUserCreationForm()
   context = {'form': form, 'error_message': error_message}
   return render(request, 'registration/signup.html', context)
+
+
+def initial_skills(request, user_id):
+    skill_form = SkillForm()
+    print('this is user_id inside initial_skills', user_id)
+    myuser = MyUser.objects.get(id=user_id)
+    print('this is my user inside initial skills', myuser)
+    user = request.user
+    return render(request, 'registration/initial_skills.html', {'skill_form': skill_form, 'user_id': user_id, 'myuser': myuser, 'user': user})
+
+def add_initial_skills(request, user_id):
+    form = SkillForm(request.POST)
+    if form.is_valid():
+        new_skill = form.save(commit=False)
+        new_skill.user_id = user_id
+        print(new_skill)
+        new_skill.save()
+
+        x = MyUser.objects.get(id=user_id).skills.add(new_skill.id)
+        print('this is x', x)
+
+        return redirect('initial_skills', user_id = user_id)
 
 def job_listings(request):
         # Look into refactoring 
@@ -170,8 +192,8 @@ def add_skill(request, user_id):
         x = MyUser.objects.get(id=user_id).skills.add(new_skill.id)
         print('this is x', x)
 
-    return redirect('profile')
-       
+        return redirect('profile')
+
 def searchbar(request):
         matched_arr = []
         final_arr = []

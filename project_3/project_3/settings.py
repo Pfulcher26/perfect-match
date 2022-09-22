@@ -132,3 +132,6 @@ LOGOUT_REDIRECT_URL = '/'
 
 AUTH_USER_MODEL = 'main_app.MyUser'
 
+import environ
+environ.Env()
+environ.Env.read_env()
