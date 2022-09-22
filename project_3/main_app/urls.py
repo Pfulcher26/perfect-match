@@ -9,11 +9,11 @@ urlpatterns = [
     path('accounts/signup/<int:user_id>/add_initial_skills', views.add_initial_skills, name='add_initial_skills'),
     path('job-listings/', views.job_listings, name = 'job_listings'),
     path('job-matches/', views.job_matches, name='job_matches'),
-    path('saved-jobs/', views.saved_jobs, name='saved_jobs'),
+    path('saved-jobs/<int:job_id>', views.saved_jobs, name='saved_jobs'),
+    path('saved-jobs/', views.saved_jobs_index, name='saved_jobs_index'),
     path('profile/', views.profile, name='profile'),
     path('profile/<int:user_id>/add-skill/', views.add_skill, name='add_skill'),
     path('about/', views.about, name = 'about'),
     path('searchbar/', views.searchbar, name ='searchbar'),
-
 ]
 

@@ -1,11 +1,12 @@
 from http.client import HTTPResponse
 from re import X
+import re
 from django.http import HttpResponse
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse
 from django.shortcuts import render, redirect
-from .models import MyUser, Skill, Job
+from .models import Job_listing, MyUser, Skill, Job
 from main_app.forms import SkillForm, CustomUserCreationForm
 from .models import MyUser, Skill
 import requests
@@ -18,8 +19,13 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 import os
 
 #json that returns everything related to software engineering jobs 
+
 response = requests.get(f"https://api.adzuna.com/v1/api/jobs/us/search/1?app_id={os.environ['API_ID']}&app_key={os.environ['API_KEY']}&results_per_page=200&what=software")
+
 job_list = []
+saved_list = []
+user_list = []
+
 # from django.contrib.auth.backends import BaseBackend
 
 # from .models import User, Skill, Job, Company
@@ -93,13 +99,24 @@ def job_listings(request):
         results = json['results'] 
         # Creates a results list 
         results_list = []
-        # appends all job descriptions to the list 
-        for i in results:
-            results_list.append(i)
-            new_object = Job(i['description'], i['title'], i['company'], i['category'], i['location'], i['id'], i['redirect_url'])
+  
+        for i in results:       
+            # test = Job.objects.get(job_id.__contains__(i['id']))
+            # print(test)
+            # id = i['id']
+            # final_jobs = Job.objects.filter(id__in = x)
+            if Job.objects.filter(job_id=i['id']).exists():
+                pass
+            else:
+                new_object = Job.objects.create(description = i['description'],title = i['title'],company_display_name = i['company'],category_label= i['category'], location_display_name =i['location'],  job_id = i['id'],job_posting_url = i['redirect_url'])
+                new_object.save()
+                job_list.append(new_object)
+
             
-            job_list.append(new_object)
-            
+            # new_job = Job.objects.create(description =i['description'], title = i['title'], company_display_name = i['company'],category_label= i['category'], location_display_name = i['location'], job_id = i['id'],job_posting_url = i['redirect_url'])
+            # new_job.save()
+        # print(job_list)
+        results_list = Job.objects.all()
         # renders the html with the results list 
         return render(request, 'job/job_listings.html', {'results_list': results_list})
 
@@ -129,8 +146,25 @@ def job_matches(request):
     return render(request, 'user/job_matches.html', {'matches': matches})
 
 @login_required
-def saved_jobs(request):
-    return render(request, 'user/saved_jobs.html')
+def saved_jobs(request, job_id):
+    myuser = MyUser.objects.get(id=request.user.id)
+    print(myuser)
+    for i in job_list:
+        if str(job_id) == str(i.job_id):
+            # saved_list.append(i)
+            i.id = myuser.id
+            print(i.id)
+            myuser.save()
+            break
+
+    # saved_list = request.user.saved_jobs
+    # request.user.save()
+    # print(request.user.saved_jobs)
+    return redirect('/saved-jobs')
+
+def saved_jobs_index(request):
+    myuser = MyUser.objects.get(id=request.user.id)
+    return render(request, 'user/saved_jobs.html', {'saved_list': myuser.saved_jobs})
 
 @login_required
 def profile(request):
@@ -162,14 +196,20 @@ def add_skill(request, user_id):
 
 def searchbar(request):
         matched_arr = []
+        final_arr = []
         if request.method == 'GET':
             search = request.GET.get('search')
+            test_list = Job.objects.all().values_list('description', 'job_id')
+            for i in test_list:
+                if i[0].__contains__(search):
+                    matched_arr.append(Job.objects.filter(job_id = i[1]))
+        # print(matched_arr)
+        for i in matched_arr:
+            final_arr.append(i[0])
 
-            for i in job_list:
-                if i.description.lower().__contains__(search):
-                    matched_arr.append(i)
 
-        return render(request, "job/searchbar.html", {'matched_arr': matched_arr})
+
+        return render(request, "job/searchbar.html", {'matched_arr': final_arr})
 
 
 def about(request):
