@@ -2,4 +2,11 @@
 {% block content %}
 <h1>Perfect.Match()</h1>
 <p class="container-2">Welcome to perfect match.</p>
+<p class="container-2">We are a job marketplace built for developers by developers.</p>
+<p class="container-2">Our service forefronts user skills in order to match with jobs that meet specific criteria.</p>
+<p class="container-2">We cut out the fluff.</p>
+<p class="container-2">You can update your skill set anytime by visiting the profile link.</p>
+<p class="container-2">Find your perfect match by visiting one of the links below.</p>
+<a href="{% url 'job_listings' %}" class="waves-effect waves-light btn-large black">Search All Jobs</a>
+<a href="{% url 'job_matches' %}" class="waves-effect waves-light btn-large white"><span style="color:black">See My Matches</span></a>
 {% endblock %}
