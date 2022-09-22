@@ -13,9 +13,10 @@ class SkillForm(ModelForm):
 
 class CustomUserCreationForm(UserCreationForm):
 
-    skills = forms.CharField(max_length=12, min_length=4, required=True, help_text='Required: skills',
-                         widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter Skills'}))
+    email = forms.EmailField(max_length=30)
+    skills = forms.CharField(max_length=12, min_length=4, required=True, help_text='Required: serious skills only, please',
+                         widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter a skill or two'}))
 
     class Meta(UserCreationForm.Meta):
         model = MyUser
-        fields = UserCreationForm.Meta.fields + ('skills',)
+        fields = UserCreationForm.Meta.fields + ('skills', 'email')
