@@ -22,7 +22,7 @@ body {
     text-align: right;
   }
 
-  @media only screen and (max-width: 990px) {
+  @media only screen and (max-width: 1000px) {
     .navbar-to-disappear {
       position: fixed;
       right: 100%;
