@@ -66,7 +66,7 @@ def add_resume(request, user_id):
             Resume.objects.create(url=url, user_id=user_id)
         except:
             print('An error occurred uploading file to S3')
-    return redirect('detail', user_id=user_id)
+    return redirect('profile', user_id=user_id)
 
 def signup(request):
   error_message = ''

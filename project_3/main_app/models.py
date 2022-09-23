@@ -12,10 +12,6 @@ class Skill(models.Model):
     def __str__(self):
         return f"{self.name}"
 
-class Resume(models.Model):
-    url = models.CharField(max_length=200)
-    user = models.ForeignKey(MyUser, on_delete=models.CASCADE)
-    
     #def __str__(self):
      #   return f"Photo for cat_id: {self.cat_id} @{self.url}"
 
@@ -50,6 +46,10 @@ class MyUser(AbstractUser):
     skills = models.ManyToManyField(Skill)
     saved_jobs = models.ManyToManyField(Job)
 
+class Resume(models.Model):
+    url = models.CharField(max_length=200)
+    user = models.ForeignKey(MyUser, on_delete=models.CASCADE)
+    
 
 
 

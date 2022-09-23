@@ -30,9 +30,9 @@
 </div>
 
 </div>
-<!-- Insert photo markup below this comment -->
+
 {% for resume in myuser.resume_set.all %}
-  <a href={{resume.url}} class= btn btn-primary>Download resume pdf</a>
+  <a href={{resume.url}} class="btn btn-primary black">Download resume pdf</a>
 {% empty %}
   <div class="card-panel teal-text center-align">No Resumes Uploaded</div>
 {% endfor %}
@@ -41,7 +41,7 @@
   {% csrf_token %}
   <input type="file" name="resume-file">
   <br><br>
-  <input type="submit" class="btn" value="Upload Resume">
+  <input type="submit" class="btn black" value="Upload Resume">
 </form>
 
 
