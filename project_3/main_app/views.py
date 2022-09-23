@@ -105,7 +105,6 @@ def job_listings(request):
         results = json['results'] 
         # Creates a results list 
         results_list = []
-  
         for i in results:       
             # test = Job.objects.get(job_id.__contains__(i['id']))
             # print(test)
@@ -123,6 +122,7 @@ def job_listings(request):
             # new_job.save()
         # print(job_list)
         results_list = Job.objects.all()
+
         # renders the html with the results list 
         return render(request, 'job/job_listings.html', {'results_list': results_list})
 

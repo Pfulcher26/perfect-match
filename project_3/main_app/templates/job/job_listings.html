@@ -15,40 +15,13 @@
         <because of django templating you access dictionaries via . notation!--  -->
         <div class="card">
         <div class="card-content">
-            {%if i.title%}
-        <p><span style="font-size: 3rem;">{{ i.title }}</span></p>
-            {% endif %}
-
-            {%if i.company.display_name%}
-        <p><span style="font-size: 2.5rem;">{{ i.company_display_name }}</span></span></p>
-            {% endif %}
-
-            {%if i.contract_time%}
-        <p><span style="color:red">contract-length</span>: {{ i.contract_time }}</p>
-            {% endif %}
-
-            {%if i.category.label%}
-        <p><span style="color:red">label</span>: {{ i.category_label }}</p>  
-            {% endif %}
-
-            {%if i.salary_min%}
-        <p><span style="color:red">salary</span>:{{ i.salary_min }}</p>
-            {% endif %}
-
-            {% if i.description%}
-        <p><span style="color:red">description</span>:{{ i.description }}</p>
-            {% endif %}
-
-            {% if i.location.display_name%}
-        <p><span style="color:red">location:</span> {{ i.location_display_name }}</p>
-            {% endif%}
-
-            {% if i.job_id%}
-        <p><span style="color:red">job id:</span> {{ i.job_id }}</p> 
-            {% endif %}
-
-        <a href='{{ i.job_posting_url }}'target="_blank">See More</a>
-
+            <because of django templating you access dictionaries via . notation!--  -->
+            <p><span style="font-size: 3rem;">{{ i.title }}</span></p>
+            <p><span style="font-size: 2.5rem;">{{ i.company_display_name.display_name }}</span></span></p>
+            <p><span style="color:red">description</span>:{{ i.description }}</p>
+            <p><span style="color:red">job id:</span> {{ i.job_id }}</p> 
+            <a target="blank" href='{{ i.redirect_url }}'>go to listing</a>
+    
         <form action = "{% url 'saved_jobs' i.job_id%}" method = 'post'>
             {% csrf_token %}
             {{ form.as_p }}

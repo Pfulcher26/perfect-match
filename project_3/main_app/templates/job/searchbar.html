@@ -11,7 +11,6 @@
 
 
 {% if matched_arr %}
-    <p>Test</p>
     <a href = '/job-listings/'>Back to all job listings</a>
     {% for i in matched_arr %}
         <because of django templating you access dictionaries via . notation!--  -->
@@ -50,6 +49,13 @@
             {% endif %}
 
         <a href='{{ i.job_posting_url }}'target="_blank">See More</a>
+        
+        <form action = "{% url 'saved_jobs' i.job_id%}" method = 'post'>
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type = 'submit'>Add to saved</button>
+        </form>
+    
         </div>
             </div>
     {% endfor %}
