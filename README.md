@@ -42,6 +42,8 @@ Find your perfect match by visiting one of the links below.
 * Heroku
 * Whimsical
 * Adzuna API
+* Amazon web service 
+* pgAdmin 
 
 ## [Adzuna API](https://developer.adzuna.com/)
 We used the Adzuna API to pull job listings from the Adzuna website. Adzuna is a job forum website similar to indeed glassdoor. The API returns the information about the job postings on the front page of the adzuna job website. We take in this information and use it to create our own job postings.
