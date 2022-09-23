@@ -56,6 +56,7 @@ Log into the website with the log in link and then you are free to do whatever y
 
 ## Wins 
 One major win from this project was being able to implement full CRUD (Create Read Update Delete), we were able to accomplish at least one of each CRUD functions.
+<br> Another win during this project is being able to work together as a team to debug and create new code that worked.
 
 ## Hurdles 
 There were countless hurdles with the project. Almost every function we wrote that went beyond the basics functions would lead to a multitude of errors that ended with us refactoring almost all of our code. However we were able to get all the functions working in the end even if they were all seemingly impossible.
