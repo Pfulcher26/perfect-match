@@ -19,9 +19,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 import os
 
 #json that returns everything related to software engineering jobs 
-
-response = requests.get(f"https://api.adzuna.com/v1/api/jobs/us/search/1?app_id={os.environ['API_ID']}&app_key={os.environ['API_KEY']}&results_per_page=200&what=software")
-
+response = requests.get(f"https://api.adzuna.com/v1/api/jobs/us/search/1?app_id={os.environ['API_ID']}&app_key={os.environ['API_KEY']}&results_per_page=200&what=web_developer")
 job_list = []
 saved_list = []
 user_list = []
