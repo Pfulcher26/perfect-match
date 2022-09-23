@@ -56,10 +56,13 @@ Log into the website with the log in link and then you are free to do whatever y
 
 ## Wins 
 One major win from this project was being able to implement full CRUD (Create Read Update Delete), we were able to accomplish at least one of each CRUD functions.
+<br>
 <br> Another win during this project is being able to work together as a team to debug and create new code that worked.
 
 ## Hurdles 
-There were countless hurdles with the project. Almost every function we wrote that went beyond the basics functions would lead to a multitude of errors that ended with us refactoring almost all of our code. However we were able to get all the functions working in the end even if they were all seemingly impossible.
+There were countless hurdles with the project. Almost every function we wrote, that went beyond the basic functions, would lead to a multitude of errors that ended with us refactoring almost all of our code. However we were able to get all the functions working in the end even if they were all seemingly impossible.
+<br><br>
+One hurdle that stood out the most to our team was when we had to change the job listings from being in an array to an object. It wasnt working when it was stored in an array becasue we could not access it properly so we had to refactor both of our models so it could work.
 
 ## Next Steps 
 There are multiple things that I plan on implementing and these include 
