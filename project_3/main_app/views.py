@@ -211,7 +211,7 @@ def searchbar(request):
 
 
 
-        return render(request, "job/searchbar.html", {'matched_arr': final_arr})
+        return render(request, "job/searchbar.html", {'matched_arr': final_arr, "search": search},)
 
 
 def about(request):
