@@ -14,7 +14,7 @@ You can update your skill set anytime by visiting the profile link.
 
 Find your perfect match by visiting one of the links below.
 
-![Home page](https://imgur.com/gallery/bLrARnP)
+![Home page](https://imgur.com/gallery/bLrARnP.png)
 ![Sign In](https://imgur.com/gallery/6lUvU3x)
 ![Sign Up](https://imgur.com/gallery/yfZMrEW)
 ![Job listing](https://imgur.com/gallery/d38pbtF)
