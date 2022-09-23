@@ -17,7 +17,7 @@
 </div>
 {% endfor %}
 
-<form action="{% url 'about' %}" method="post">
+<form action="{% url 'home' %}" method="post">
   {% csrf_token %}
 
   <button type="submit" name="btn2" value="submit skills">

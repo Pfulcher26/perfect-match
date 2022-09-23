@@ -148,7 +148,9 @@ def job_matches(request):
         for j in skill_list:
             if (i['description'].lower().__contains__(j.lower())):
                 matches.append(i)
+                print(i)
                 break 
+    
     return render(request, 'user/job_matches.html', {'matches': matches})
 
 @login_required
