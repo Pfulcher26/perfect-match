@@ -1,6 +1,6 @@
 {% extends 'base.html' %} {% block content %}
 
-<h3>Profile</h3>
+<h3>{{ user.email }}</h3>
 <form class="loginfrm" action="{% url 'add_skill' user.id %}" method="POST">
   {% csrf_token %} <div class="loginfrm"> {{ skill_form.as_p }} </div>
   <input type="submit" class="btn black" value="Add Skill" />
@@ -12,8 +12,6 @@
 </tr>
 {% endfor %}
 
-<p>{{ user.name }}</p>
-<p>{{ user.email }}</p>
 <div class="col s6">
   <h3>My Skills</h3>
   {% if myuser.skills.count %} {% for skill in myuser.skills.all %}
