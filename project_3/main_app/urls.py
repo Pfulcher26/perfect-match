@@ -14,7 +14,6 @@ urlpatterns = [
     path('saved-jobs/', views.saved_jobs_index, name='saved_jobs_index'),
     path('profile/', views.profile, name='profile'),
     path('profile/<int:user_id>/add-skill/', views.add_skill, name='add_skill'),
-    path('about/', views.about, name = 'about'),
     path('searchbar/', views.searchbar, name ='searchbar'),
 ]
 
