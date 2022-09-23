@@ -16,7 +16,7 @@ Find your perfect match by visiting one of the links below.
 
 ![Home page](https://imgur.com/gallery/bLrARnP)
 ![Sign In](https://imgur.com/gallery/6lUvU3x)
-![Sign Up](https://imgur.com/gallery/yfZMrEW)
+![Sign Up](https://i.imgur.com/yQ0Wr0O.png)
 ![Job listing](https://imgur.com/gallery/d38pbtF)
 ![Job matches](https://imgur.com/gallery/ATyMySV)
 ![Profile](https://imgur.com/gallery/ag49iVX)
