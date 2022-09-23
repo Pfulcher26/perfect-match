@@ -31,17 +31,17 @@ user_list = []
 # Create your views here.
 
 Headers = {
-  "access-control-allow-headers": "Origin, X-Requested-With, Content-Type, Accept",
-  "access-control-allow-origin": "*",
-  "connection": "keep-alive",
-  "content-encoding": "gzip",
-  "content-length": "4281",
-  "content-type": "application/json; charset=utf8",
-  "date": "Mon, 19 Sep 2022 21:24:59 GMT",
-  "server": "openresty",
-  "vary": "Content-Type",
-  "x-catalyst": "5.90129",
-  "x-envoy-upstream-service-time": "711",
+    "access-control-allow-headers": "Origin, X-Requested-With, Content-Type, Accept",
+    "access-control-allow-origin": "*",
+    "connection": "keep-alive",
+    "content-encoding": "gzip",
+    "content-length": "4281",
+    "content-type": "application/json; charset=utf8",
+    "date": "Mon, 19 Sep 2022 21:24:59 GMT",
+    "server": "openresty",
+    "vary": "Content-Type",
+    "x-catalyst": "5.90129",
+    "x-envoy-upstream-service-time": "711",
 }
 
 def home(request):

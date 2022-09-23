@@ -76,7 +76,7 @@ WSGI_APPLICATION = 'project_3.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'perfectmatch2',
+        'NAME': 'perfectmatch',
         'USER' : 'postgres',
         'PASSWORD' : 'postgres',
         'HOST': 'localhost',
