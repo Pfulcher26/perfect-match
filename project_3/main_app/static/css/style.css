@@ -22,9 +22,26 @@ body {
     text-align: right;
   }
 
-  @media only screen and (max-width: 600px) {
+  @media only screen and (max-width: 990px) {
     .navbar-to-disappear {
-        position: fixed;
-        left: -100%;
-    }
+      position: fixed;
+      right: 100%;
   }
+}
+
+@media only screen and (max-width: 500px) {
+  body{
+        position: relative;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        min-width: 0;
+        word-wrap: break-word;
+        background-clip: border-box;
+        margin-top: 40px;
+        margin-bottom: 80px;
+        max-width: 600px;  
+        height: auto; /* height auto */
+  }
+}
