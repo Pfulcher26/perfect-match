@@ -44,7 +44,7 @@ Log into the website with the log in link and then you are free to do whatever y
 
 ## Original Wireframe and Planning 
 * [Trello](https://trello.com/b/YbLVf3RD/project-3#)
-* [Whimsical](https://whimsical.com/crud-grand-garage-4KdaPAfvXYjCUS8wwc8yUG)
+* [Whimsical](https://whimsical.com/project-3-5rQgxTeWbUqZtKvYZG7ZoC)
 
 ## Wins 
 One major win from this project was being able to implement full CRUD (Create Read Update Delete), we were able to accomplish at least one of each CRUD functions.
@@ -56,6 +56,7 @@ There were countless hurdles with the project. Almost every function we wrote th
 There are multiple things that I plan on implementing and these include 
 * Moving Api into a second folder that way we dont have to import views to use it 
 * Adding the ability to remove jobs from saved 
+* Deleting jobs after a certain amount of time and replacing them with newer ones 
 
 ## Credits 
 Patrick Schenk
