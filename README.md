@@ -14,13 +14,13 @@ You can update your skill set anytime by visiting the profile link.
 
 Find your perfect match by visiting one of the links below.
 
-![Home page](https://imgur.com/gallery/bLrARnP.png)
+![Home page](https://imgur.com/gallery/bLrARnP)
 ![Sign In](https://imgur.com/gallery/6lUvU3x)
 ![Sign Up](https://imgur.com/gallery/yfZMrEW)
 ![Job listing](https://imgur.com/gallery/d38pbtF)
 ![Job matches](https://imgur.com/gallery/ATyMySV)
 ![Profile](https://imgur.com/gallery/ag49iVX)
-![Saved Jobs](https://imgur.com/gallery/Vxjj4f4)
+![Saved Jobs](https://i.imgur.com/QL1eaql.png)
 
 
 ## Technologies used 
