@@ -45,23 +45,21 @@ Log into the website with the log in link and then you are free to do whatever y
 ## Wins 
 One major win from this project was being able to implement full CRUD (Create Read Update Delete), we were able to accomplish at least one of each CRUD functions.
 
-Another win from this project was being able to implement googles OAuth, this was something I thought was going to be very difficult however it was not as big a problem as I had anticipated, albeit it was still difficult.
 
 ## Hurdles 
-The single largest hurdle that I faced in this project was being able to take items from one page and move them to another page while simultaneously moving them from one object to another. 
-
-Some other smaller hurdles were the sheer amount of bugs that I had, for every function I implemented there were countless bugs. Each function required extremely thorough testing to make sure It worked properly
+There were countless hurdles with the project. Almost every function we wrote that went beyond the basics functions would lead to a multitude of errors that ended with us refactoring almost all of our code. However we were able to get all the functions working in the end even if they were all seemingly impossible.
 
 ## Next Steps 
 There are multiple things that I plan on implementing and these include 
-* A range finder so you can see items in your area
-* Adding the ability to upload an image of your item listed 
-* The ability to purchase items with real currency
+* Moving Api into a second folder that way we dont have to import views to use it 
+* Adding the ability to remove jobs from saved 
 
 ## Credits 
 Patrick Schenk
-
-and
+George Perry 
+Payne Fulcher 
+James Fox 
+Ogan Aktolun
 
 Instructional Team at GA, 
 * Suresh Sigera 
