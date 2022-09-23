@@ -36,7 +36,7 @@ Find your perfect match by visiting one of the links below.
 * Adzuna API
 
 ## [Adzuna API](https://developer.adzuna.com/)
-We used the Adzuna API to pull the job listings. Adzuna is a job posting website similar to indeed glassdoor. The API returns the information about the job postings on the front page of the adzuna job website. We take in this information and use it to create our own job postings.
+We used the Adzuna API to pull job listings from the Adzuna website. Adzuna is a job forum website similar to indeed glassdoor. The API returns the information about the job postings on the front page of the adzuna job website. We take in this information and use it to create our own job postings.
 
 
 ## [Getting started ](https://perfectmatchskills.herokuapp.com/job-listings/)
