@@ -18,6 +18,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 # import os in order to us env 
 import os
 
+
+
 #json that returns everything related to software engineering jobs 
 response = requests.get("https://api.adzuna.com/v1/api/jobs/us/search/1?app_id=ce87f4ab&app_key=ccee3366b025e6a97efaa9026117aa9f&results_per_page=200&what=web_developer")
 job_list = []
@@ -110,12 +112,17 @@ def job_listings(request):
             # print(test)
             # id = i['id']
             # final_jobs = Job.objects.filter(id__in = x)
-            if Job.objects.filter(job_id=i['id']).exists():
-                pass
-            else:
-                new_object = Job.objects.create(description = i['description'],title = i['title'],company_display_name = i['company'],category_label= i['category'], location_display_name =i['location'],  job_id = i['id'],job_posting_url = i['redirect_url'])
-                new_object.save()
-                job_list.append(new_object)
+
+
+#suresh
+
+
+
+            Job.objects.create(description = 'hello', title = 'hello', company_display_name = 'hello', category_label= 'hello', location_display_name ='hello',  job_id = 1,job_posting_url = 'hello')
+       
+            new_object = Job.objects.create(description = i['description'],title = i['title'],company_display_name = i['company']['display_name'],category_label= i['category'], location_display_name =i['location']['display_name'],  job_id = i['id'],job_posting_url = i['redirect_url'])
+            new_object.save()
+            job_list.append(new_object)
 
             
             # new_job = Job.objects.create(description =i['description'], title = i['title'], company_display_name = i['company'],category_label= i['category'], location_display_name = i['location'], job_id = i['id'],job_posting_url = i['redirect_url'])
