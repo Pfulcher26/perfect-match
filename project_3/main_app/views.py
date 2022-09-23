@@ -19,7 +19,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 import os
 
 #json that returns everything related to software engineering jobs 
-response = requests.get(f"https://api.adzuna.com/v1/api/jobs/us/search/1?app_id={os.environ['API_ID']}&app_key={os.environ['API_KEY']}&results_per_page=200&what=web_developer")
+response = requests.get("https://api.adzuna.com/v1/api/jobs/us/search/1?app_id=ce87f4ab&app_key=ccee3366b025e6a97efaa9026117aa9f&results_per_page=200&what=web_developer")
 job_list = []
 saved_list = []
 user_list = []
@@ -95,7 +95,7 @@ def delete_skill(request, user_id, skill_id):
     x = MyUser.objects.get(id=user_id).skills.filter(id=skill_id)
     x.delete()
     print('this is skill_id inside delete_skill', skill_id)
-    return redirect('about')
+    return redirect('profile')
 
 def job_listings(request):
         # Look into refactoring 
@@ -154,23 +154,17 @@ def job_matches(request):
 @login_required
 def saved_jobs(request, job_id):
     myuser = MyUser.objects.get(id=request.user.id)
-    print(myuser)
-    for i in job_list:
-        if str(job_id) == str(i.job_id):
-            # saved_list.append(i)
-            i.id = myuser.id
-            print(i.id)
-            myuser.save()
-            break
+    # print(job_id)
+    x = Job.objects.get(job_id = job_id)
+    myuser.saved_jobs.add(x)
+    myuser.save()
+    print(myuser.saved_jobs)
 
-    # saved_list = request.user.saved_jobs
-    # request.user.save()
-    # print(request.user.saved_jobs)
     return redirect('/saved-jobs')
 
 def saved_jobs_index(request):
     myuser = MyUser.objects.get(id=request.user.id)
-    return render(request, 'user/saved_jobs.html', {'saved_list': myuser.saved_jobs})
+    return render(request, 'user/saved_jobs.html', {'myuser': myuser})
 
 @login_required
 def profile(request):
