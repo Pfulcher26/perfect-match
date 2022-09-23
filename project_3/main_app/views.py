@@ -1,11 +1,12 @@
 from http.client import HTTPResponse
 from re import X
+import re
 from django.http import HttpResponse
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse
 from django.shortcuts import render, redirect
-from .models import MyUser, Skill, Job
+from .models import Job_listing, MyUser, Skill, Job
 from main_app.forms import SkillForm, CustomUserCreationForm
 from .models import MyUser, Skill
 import requests
@@ -14,12 +15,15 @@ from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-
-
+# import os in order to us env 
+import os
 
 #json that returns everything related to software engineering jobs 
-response = requests.get('https://api.adzuna.com/v1/api/jobs/us/search/1?app_id=d77f8a15&app_key=cfbfca3c016e2c88fb67412299052d58&results_per_page=200&what=software')
+response = requests.get("https://api.adzuna.com/v1/api/jobs/us/search/1?app_id=ce87f4ab&app_key=ccee3366b025e6a97efaa9026117aa9f&results_per_page=200&what=web_developer")
 job_list = []
+saved_list = []
+user_list = []
+
 # from django.contrib.auth.backends import BaseBackend
 
 # from .models import User, Skill, Job, Company
@@ -54,13 +58,44 @@ def signup(request):
       user = form.save()
       # This is how we log a user in via code
       login(request, user)
-      return redirect('home')
+      print('this is user_id inside signup', request.user.id)
+      return redirect('initial_skills', user_id = request.user.id)
     else:
       error_message = 'Invalid sign up - try again'
   # A bad POST or a GET request, so render signup.html with an empty form
   form = CustomUserCreationForm()
   context = {'form': form, 'error_message': error_message}
   return render(request, 'registration/signup.html', context)
+
+
+def initial_skills(request, user_id):
+    skill_form = SkillForm()
+    print('this is user_id inside initial_skills', user_id)
+    myuser = MyUser.objects.get(id=user_id)
+    print('this is my user inside initial skills', myuser)
+    user = request.user
+    return render(request, 'registration/initial_skills.html', {'skill_form': skill_form, 'user_id': user_id, 'myuser': myuser, 'user': user})
+
+def add_initial_skills(request, user_id):
+    form = SkillForm(request.POST)
+    if form.is_valid():
+        new_skill = form.save(commit=False)
+        new_skill.user_id = user_id
+        print(new_skill)
+        new_skill.save()
+
+        x = MyUser.objects.get(id=user_id).skills.add(new_skill.id)
+        print('this is x', x)
+
+        return redirect('initial_skills', user_id = user_id)
+
+def delete_skill(request, user_id, skill_id):
+    print('this is user_id inside delete_skill', user_id)
+    Skill.objects.get(id=skill_id).delete()
+    x = MyUser.objects.get(id=user_id).skills.filter(id=skill_id)
+    x.delete()
+    print('this is skill_id inside delete_skill', skill_id)
+    return redirect('profile')
 
 def job_listings(request):
         # Look into refactoring 
@@ -70,13 +105,24 @@ def job_listings(request):
         results = json['results'] 
         # Creates a results list 
         results_list = []
-        # appends all job descriptions to the list 
-        for i in results:
-            results_list.append(i)
-            new_object = Job(i['description'], i['title'], i['company'], i['category'], i['location'], i['id'], i['redirect_url'])
+  
+        for i in results:       
+            # test = Job.objects.get(job_id.__contains__(i['id']))
+            # print(test)
+            # id = i['id']
+            # final_jobs = Job.objects.filter(id__in = x)
+            if Job.objects.filter(job_id=i['id']).exists():
+                pass
+            else:
+                new_object = Job.objects.create(description = i['description'],title = i['title'],company_display_name = i['company'],category_label= i['category'], location_display_name =i['location'],  job_id = i['id'],job_posting_url = i['redirect_url'])
+                new_object.save()
+                job_list.append(new_object)
+
             
-            job_list.append(new_object)
-            
+            # new_job = Job.objects.create(description =i['description'], title = i['title'], company_display_name = i['company'],category_label= i['category'], location_display_name = i['location'], job_id = i['id'],job_posting_url = i['redirect_url'])
+            # new_job.save()
+        # print(job_list)
+        results_list = Job.objects.all()
         # renders the html with the results list 
         return render(request, 'job/job_listings.html', {'results_list': results_list})
 
@@ -100,14 +146,25 @@ def job_matches(request):
     # iterates
     for i in results:
         for j in skill_list:
-            if (i['description'].lower().__contains__(j)):
+            if (i['description'].lower().__contains__(j.lower())):
                 matches.append(i)
                 break 
     return render(request, 'user/job_matches.html', {'matches': matches})
 
 @login_required
-def saved_jobs(request):
-    return render(request, 'user/saved_jobs.html')
+def saved_jobs(request, job_id):
+    myuser = MyUser.objects.get(id=request.user.id)
+    # print(job_id)
+    x = Job.objects.get(job_id = job_id)
+    myuser.saved_jobs.add(x)
+    myuser.save()
+    print(myuser.saved_jobs)
+
+    return redirect('/saved-jobs')
+
+def saved_jobs_index(request):
+    myuser = MyUser.objects.get(id=request.user.id)
+    return render(request, 'user/saved_jobs.html', {'myuser': myuser})
 
 @login_required
 def profile(request):
@@ -134,17 +191,25 @@ def add_skill(request, user_id):
 
         x = MyUser.objects.get(id=user_id).skills.add(new_skill.id)
         print('this is x', x)
-       
+
+        return redirect('profile')
+
 def searchbar(request):
         matched_arr = []
+        final_arr = []
         if request.method == 'GET':
             search = request.GET.get('search')
+            test_list = Job.objects.all().values_list('description', 'job_id')
+            for i in test_list:
+                if i[0].__contains__(search):
+                    matched_arr.append(Job.objects.filter(job_id = i[1]))
+        # print(matched_arr)
+        for i in matched_arr:
+            final_arr.append(i[0])
 
-            for i in job_list:
-                if i.description.lower().__contains__(search):
-                    matched_arr.append(i)
 
-        return render(request, "job/searchbar.html", {'matched_arr': matched_arr})
+
+        return render(request, "job/searchbar.html", {'matched_arr': final_arr})
 
 
 def about(request):

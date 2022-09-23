@@ -76,7 +76,7 @@ WSGI_APPLICATION = 'project_3.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'perfectmatch',
+        'NAME': 'perfectmatch2',
         'USER' : 'postgres',
         'PASSWORD' : 'postgres',
         'HOST': 'localhost',
@@ -132,3 +132,6 @@ LOGOUT_REDIRECT_URL = '/'
 
 AUTH_USER_MODEL = 'main_app.MyUser'
 
+import environ
+environ.Env()
+environ.Env.read_env()

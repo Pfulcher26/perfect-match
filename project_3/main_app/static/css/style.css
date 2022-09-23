@@ -21,3 +21,10 @@ body {
     padding-top: 0;
     text-align: right;
   }
+
+  @media only screen and (max-width: 992px) {
+    .navbar-to-disappear {
+        position: fixed;
+        left: -100%;
+    }
+  }
