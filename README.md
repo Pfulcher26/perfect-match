@@ -1,18 +1,18 @@
 # Project-3
-This is our third project at General Assembly and we decided to make Perfect.Match()! 
+This is our third project at General Assembly.  Welcome to Perfect.Match()! 
 
 ## Description 
 Welcome to perfect match.
 
-We are a job marketplace built for developers by developers.
+We are a job sieving tool built for developers by developers.
 
-Our service forefronts user skills in order to match with jobs that meet specific criteria.
+Our service forefronts user skills in order to match them with jobs that meet the criteria they feel best represents their skillset.  
 
-We cut out the fluff.
+We cut out the fluff and unceccsary features of other job search tools by placing the onus on the user to determine what they feel best represents their skillset.  We want to create a tool that is intuitive, easy to use and transparent.  
 
-You can update your skill set anytime by visiting the profile link.
+You can update your skill set anytime by visiting your profile link.
 
-Find your perfect match by visiting one of the links below.
+New results all the time. 
 
 ## Home Page
 ![Home page](https://i.imgur.com/d5cAxte.png)
@@ -46,7 +46,7 @@ Find your perfect match by visiting one of the links below.
 * pgAdmin 
 
 ## [Adzuna API](https://developer.adzuna.com/)
-We used the Adzuna API to pull job listings from the Adzuna website. Adzuna is a job forum website similar to indeed glassdoor. The API returns the information about the job postings on the front page of the adzuna job website. We take in this information and use it to create our own job postings.
+We used the Adzuna API to pull job listings from the Adzuna website. Adzuna is a job forum website similar to indeed, or glassdoor. The API returns the information for job postings that can then be filtered to fetch very content that adheres to whatever criteria are of interest. We take in this information and use it to create our own job postings, which we can then match against the user's skillset. 
 <br> [Documentation for API](https://developer.adzuna.com/overview)
 
 ## [Getting started ](https://perfectmatchskills.herokuapp.com/job-listings/)
@@ -57,20 +57,22 @@ Log into the website with the log in link and then you are free to do whatever y
 * [Whimsical](https://whimsical.com/project-3-5rQgxTeWbUqZtKvYZG7ZoC)
 
 ## Wins 
-One major win from this project was being able to implement full CRUD (Create Read Update Delete), we were able to accomplish at least one of each CRUD functions.
+A major win for this project was being able to implement full CRUD (Create Read Update Delete).  Our site features at least one each CRUD operation. 
 <br>
-<br> Another win during this project is being able to work together as a team to debug and create new code that worked.
+<br> Another win during this project was being able to work together as a team to impliment an agile workflow that pooled everyone's resources into solving problems.  
 
 ## Hurdles 
-There were countless hurdles with the project. Almost every function we wrote, that went beyond the basic functions, would lead to a multitude of errors that ended with us refactoring almost all of our code. However we were able to get all the functions working in the end even if they were all seemingly impossible.
+There were countless hurdles with the project. Almost every function we wrote, that went beyond basics, lead to a multitude of errors that usually resulted in refactoring almost all of our codebase. However, we were able to get all of the functions working and learned a lot in the process, even if at first they appeared seemingly impossible. 
+
 <br><br>
-One hurdle that stood out the most to our team was when we had to change the job listings from being in an array to an object. It wasnt working when it was stored in an array becasue we could not access it properly so we had to refactor both of our models so it could work.
+A particularly noteworthy hurdle was when we had to change ourjob listings from being stored in a list to actually saving them as objects in the database. It resulted in unexpected errors when stored in an array, because we didn't have any persistent data.  Refacorting the function to store the data in a SQL database and then accessing that data through object queries greatly improved the performance and readability of our code. 
 
 ## Next Steps 
-There are multiple things that we plan on implementing and these include 
-* Moving Api into a second folder that way we dont have to import views to use it 
-* Adding the ability to remove jobs from saved 
-* Deleting jobs after a certain amount of time and replacing them with newer ones 
+We have a slew of icebox features, including: 
+* Moving Api into an independent folder, so we don't have to rely on it being in views, and therefor have to import views in each instance we want to use it.  
+* Adding the ability to remove jobs from saved.
+* Deleting jobs after a certain amount of time and replacing them with newer ones.
+* Updating our API alogirthm so that the API is judiciously pinged, rather than having it ping every time a user accesses one of the URL endpoints that depend upon it. 
 
 ## Credits 
 * Patrick Schenk
