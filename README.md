@@ -24,14 +24,13 @@ Find your perfect match by visiting one of the links below.
 
 
 ## Technologies used 
-* HTML
-* Javascript
+* Django
+* Python
 * CSS
-* MongoDB Atlas
-* Mongoose
-* Express
-* Ejs
-* Google Oauth
+* HTML
+* PostgreSQL
+* Trello
+* VScode
 * Heroku
 * Whimsical
 
