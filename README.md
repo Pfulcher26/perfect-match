@@ -21,7 +21,7 @@ Find your perfect match by visiting one of the links below.
 ![Job matches](https://i.imgur.com/NtW0Z8u.png)
 ![Profile](https://i.imgur.com/T7PHycP.png)
 ![Saved Jobs](https://i.imgur.com/QL1eaql.png) 
-
+![The API we used](https://i.imgur.com/Y3gjKwQ.png)
 
 ## Technologies used 
 * Django
