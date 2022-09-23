@@ -33,9 +33,13 @@ Find your perfect match by visiting one of the links below.
 * VScode
 * Heroku
 * Whimsical
+* Adzuna API
+
+## [Adzuna API](https://developer.adzuna.com/)
+We used the Adzuna API to pull the job listings. Adzuna is a job posting website similar to indeed glassdoor. The API returns the information about the job postings on the front page of the adzuna job website. We take in this information and use it to create our own job postings.
 
 
-## [Getting started ](http://example.com "Title")
+## [Getting started ](https://perfectmatchskills.herokuapp.com/job-listings/)
 Log into the website with the log in link and then you are free to do whatever you want in the website, browse job listings, add skills, remove skills, add jobs to youre saved jobs, ANYTHING!
 
 ## Original Wireframe and Planning 
@@ -44,7 +48,6 @@ Log into the website with the log in link and then you are free to do whatever y
 
 ## Wins 
 One major win from this project was being able to implement full CRUD (Create Read Update Delete), we were able to accomplish at least one of each CRUD functions.
-
 
 ## Hurdles 
 There were countless hurdles with the project. Almost every function we wrote that went beyond the basics functions would lead to a multitude of errors that ended with us refactoring almost all of our code. However we were able to get all the functions working in the end even if they were all seemingly impossible.
