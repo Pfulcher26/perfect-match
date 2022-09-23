@@ -39,11 +39,11 @@ Find your perfect match by visiting one of the links below.
 Log into the website with the log in link and then you are free to do whatever you want in the website, browse job listings, add skills, remove skills, add jobs to youre saved jobs, ANYTHING!
 
 ## Original Wireframe and Planning 
-* [Lucid](https://lucid.app/lucidchart/b87764aa-07e5-4e65-9341-7701001a847a/edit?page=0_0&invitationId=inv_7ba32e97-945c-4498-a69b-35dbcc0eaa2d#)
+* [Trello](https://trello.com/b/YbLVf3RD/project-3#)
 * [Whimsical](https://whimsical.com/crud-grand-garage-4KdaPAfvXYjCUS8wwc8yUG)
 
 ## Wins 
-One major win from this project was being able to implement full CRUD (Create Read Update Delete), I was able to accomplish at least one of each CRUD function.
+One major win from this project was being able to implement full CRUD (Create Read Update Delete), we were able to accomplish at least one of each CRUD functions.
 
 Another win from this project was being able to implement googles OAuth, this was something I thought was going to be very difficult however it was not as big a problem as I had anticipated, albeit it was still difficult.
 
