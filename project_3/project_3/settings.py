@@ -135,3 +135,6 @@ AUTH_USER_MODEL = 'main_app.MyUser'
 import environ
 environ.Env()
 environ.Env.read_env()
+
+import django_on_heroku
+django_on_heroku.settings(locals())
