@@ -65,7 +65,7 @@ There were countless hurdles with the project. Almost every function we wrote, t
 One hurdle that stood out the most to our team was when we had to change the job listings from being in an array to an object. It wasnt working when it was stored in an array becasue we could not access it properly so we had to refactor both of our models so it could work.
 
 ## Next Steps 
-There are multiple things that I plan on implementing and these include 
+There are multiple things that we plan on implementing and these include 
 * Moving Api into a second folder that way we dont have to import views to use it 
 * Adding the ability to remove jobs from saved 
 * Deleting jobs after a certain amount of time and replacing them with newer ones 
