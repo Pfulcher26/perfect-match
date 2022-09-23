@@ -71,11 +71,11 @@ There are multiple things that I plan on implementing and these include
 * Deleting jobs after a certain amount of time and replacing them with newer ones 
 
 ## Credits 
-Patrick Schenk
-George Perry 
-Payne Fulcher 
-James Fox 
-Ogan Aktolun
+* Patrick Schenk
+* George Perry 
+* Payne Fulcher 
+* James Fox 
+* Ogan Aktolun
 
 Instructional Team at GA, 
 * Suresh Sigera 
