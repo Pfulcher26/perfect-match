@@ -16,19 +16,19 @@ Find your perfect match by visiting one of the links below.
 
 ## Home Page
 ![Home page](https://i.imgur.com/d5cAxte.png)
-## Home Page
+## Log in
 ![Sign In](https://i.imgur.com/djBj8p7.png)
-## Home Page
+## Sign up
 ![Sign Up](https://i.imgur.com/yQ0Wr0O.png)
-## Home Page
+## Job listings
 ![Job listing](https://i.imgur.com/nNgB5w3.png)
-## Home Page
+## Job matches
 ![Job matches](https://i.imgur.com/NtW0Z8u.png)
-## Home Page
+## Profile
 ![Profile](https://i.imgur.com/T7PHycP.png)
-## Home Page
+## Saved Jobs
 ![Saved Jobs](https://i.imgur.com/QL1eaql.png) 
-## Home Page
+## API 
 ![The API we used](https://i.imgur.com/Y3gjKwQ.png)
 
 ## Technologies used 
