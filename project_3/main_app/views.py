@@ -6,7 +6,7 @@ from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse
 from django.shortcuts import render, redirect
-from .models import Job_listing, MyUser, Skill, Job
+from .models import Job_listing, MyUser, Skill, Job, Resume
 from main_app.forms import SkillForm, CustomUserCreationForm
 from .models import MyUser, Skill
 import requests
@@ -17,6 +17,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 # import os in order to us env 
 import os
+import boto3
+import uuid
 
 #json that returns everything related to software engineering jobs 
 response = requests.get("https://api.adzuna.com/v1/api/jobs/us/search/1?app_id=ce87f4ab&app_key=ccee3366b025e6a97efaa9026117aa9f&results_per_page=200&what=web_developer")
@@ -46,6 +48,25 @@ Headers = {
 
 def home(request):
     return render(request, 'home.html')
+
+def add_resume(request, user_id):
+    # photo-file will be the "name" attribute on the <input type="file">
+    resume_file = request.FILES.get('resume-file', None)
+    if resume_file:
+        s3 = boto3.client('s3')
+        # need a unique "key" for S3 / needs image file extension too
+        key = uuid.uuid4().hex[:6] + resume_file.name[resume_file.name.rfind('.'):]
+        # just in case something goes wrong
+        try:
+            bucket = os.environ['S3_BUCKET']
+            s3.upload_fileobj(resume_file, bucket, key)
+            # build the full url string
+            url = f"{os.environ['S3_BASE_URL']}{bucket}/{key}"
+            # we can assign to cat_id or cat (if you have a cat object)
+            Resume.objects.create(url=url, user_id=user_id)
+        except:
+            print('An error occurred uploading file to S3')
+    return redirect('detail', user_id=user_id)
 
 def signup(request):
   error_message = ''
