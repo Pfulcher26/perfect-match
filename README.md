@@ -13,7 +13,7 @@ You can update your skill set anytime by visiting your profile link.
 
 New results all the time. 
 
-[Check it out](https://developer.adzuna.com/)
+[Check it out]([https://developer.adzuna.com/](https://perfectmatchskills.herokuapp.com/))
 
 ## Home Page
 ![Home page](https://i.imgur.com/d5cAxte.png)
