@@ -36,7 +36,7 @@ Find your perfect match by visiting one of the links below.
 
 
 ## [Getting started ](http://example.com "Title")
-Log into the website with google by clicking the Google icon, and then you are free to do whatever you want in the website, create items, remove your own items, buy other peoples items, almost anything! (Note that the cart and new items link will not work unless signed in)
+Log into the website with the log in link and then you are free to do whatever you want in the website, browse job listings, add skills, remove skills, add jobs to youre saved jobs, ANYTHING!
 
 ## Original Wireframe and Planning 
 * [Lucid](https://lucid.app/lucidchart/b87764aa-07e5-4e65-9341-7701001a847a/edit?page=0_0&invitationId=inv_7ba32e97-945c-4498-a69b-35dbcc0eaa2d#)
