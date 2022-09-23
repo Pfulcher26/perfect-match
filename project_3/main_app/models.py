@@ -12,6 +12,13 @@ class Skill(models.Model):
     def __str__(self):
         return f"{self.name}"
 
+class Resume(models.Model):
+    url = models.CharField(max_length=200)
+    user = models.ForeignKey(MyUser, on_delete=models.CASCADE)
+    
+    #def __str__(self):
+     #   return f"Photo for cat_id: {self.cat_id} @{self.url}"
+
 class Job_listing():
     def __init__(self, description, title, company_display_name, category_label, location_display_name, job_id, redirect_url):
         self.description = description

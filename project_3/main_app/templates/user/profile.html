@@ -28,4 +28,21 @@
   </div>
   {% endfor %} {% endif %}
 </div>
+
+</div>
+<!-- Insert photo markup below this comment -->
+{% for resume in myuser.resume_set.all %}
+  <a href={{resume.url}} class= btn btn-primary>Download resume pdf</a>
+{% empty %}
+  <div class="card-panel teal-text center-align">No Resumes Uploaded</div>
+{% endfor %}
+
+<form action="{% url 'add_resume' myuser.id %}" enctype="multipart/form-data" method="POST" class="card-panel">
+  {% csrf_token %}
+  <input type="file" name="resume-file">
+  <br><br>
+  <input type="submit" class="btn" value="Upload Resume">
+</form>
+
+
 {% endblock %}

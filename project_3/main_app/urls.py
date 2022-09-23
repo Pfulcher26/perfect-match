@@ -15,5 +15,7 @@ urlpatterns = [
     path('profile/', views.profile, name='profile'),
     path('profile/<int:user_id>/add-skill/', views.add_skill, name='add_skill'),
     path('searchbar/', views.searchbar, name ='searchbar'),
+    path('profile/<int:user_id>/add_resume/', views.add_resume, name='add_resume'),
+
 ]
 
