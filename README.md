@@ -37,7 +37,7 @@ Find your perfect match by visiting one of the links below.
 
 ## [Adzuna API](https://developer.adzuna.com/)
 We used the Adzuna API to pull job listings from the Adzuna website. Adzuna is a job forum website similar to indeed glassdoor. The API returns the information about the job postings on the front page of the adzuna job website. We take in this information and use it to create our own job postings.
-[Documentation for API](https://developer.adzuna.com/overview)
+<br> [Documentation for API](https://developer.adzuna.com/overview)
 
 ## [Getting started ](https://perfectmatchskills.herokuapp.com/job-listings/)
 Log into the website with the log in link and then you are free to do whatever you want in the website, browse job listings, add skills, remove skills, add jobs to youre saved jobs, ANYTHING!
