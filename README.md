@@ -1,6 +1,5 @@
 # Project-3
-This is our third project at General Assembly.  Welcome to Perfect.Match()! 
-
+This is our third project at General Assembly.  
 ## Description 
 Welcome to perfect match.
 
