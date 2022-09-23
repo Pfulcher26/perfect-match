@@ -8,10 +8,12 @@
 {% for skill in user.skills.all %}
 <p>{{ skill.name }}</p>
 <div class="card-action">
+  {%if user.skill %}
   <form action="{% url 'delete_skill' user.id user.skill.id %}" method="post">
     {% csrf_token %}
     <button type="submit" class="btn">X</button>
   </form>
+  {%endif%}
 </div>
 {% endfor %}
 

@@ -201,7 +201,7 @@ def searchbar(request):
             search = request.GET.get('search')
             test_list = Job.objects.all().values_list('description', 'job_id')
             for i in test_list:
-                if i[0].__contains__(search):
+                if i[0].lower().__contains__(search.lower()):
                     matched_arr.append(Job.objects.filter(job_id = i[1]))
         # print(matched_arr)
         for i in matched_arr:
