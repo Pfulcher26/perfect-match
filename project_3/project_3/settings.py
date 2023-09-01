@@ -77,7 +77,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'perfectmatch',
-        'USER' : 'postgres',
+        'USER' : 'pp',
         'PASSWORD' : 'postgres',
         'HOST': 'localhost',
         'PORT': 5432
@@ -135,7 +135,7 @@ AUTH_USER_MODEL = 'main_app.MyUser'
 AWS_ACCESS_KEY_ID='AKIA3C2XAD33UFZVSM6I'
 AWS_SECRET_ACCESS_KEY='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'
 S3_BUCKET='project-for-ga-7-25'
-S3_BASE_URL=https://s3-us-west-1.amazonaws.com/
+S3_BASE_URL= 'https://s3-us-west-1.amazonaws.com/'
 
 import environ
 environ.Env()

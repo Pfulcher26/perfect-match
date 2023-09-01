@@ -26,26 +26,6 @@ job_list = []
 saved_list = []
 user_list = []
 
-# from django.contrib.auth.backends import BaseBackend
-
-# from .models import User, Skill, Job, Company
-
-# Create your views here.
-
-Headers = {
-    "access-control-allow-headers": "Origin, X-Requested-With, Content-Type, Accept",
-    "access-control-allow-origin": "*",
-    "connection": "keep-alive",
-    "content-encoding": "gzip",
-    "content-length": "4281",
-    "content-type": "application/json; charset=utf8",
-    "date": "Mon, 19 Sep 2022 21:24:59 GMT",
-    "server": "openresty",
-    "vary": "Content-Type",
-    "x-catalyst": "5.90129",
-    "x-envoy-upstream-service-time": "711",
-}
-
 def home(request):
     return render(request, 'home.html')
 
@@ -55,6 +35,10 @@ def add_resume(request, user_id):
     if resume_file:
         s3 = boto3.client('s3')
         # need a unique "key" for S3 / needs image file extension too
+        # this code generates a random 6-character string (using the first 6 characters of a UUID) and combines 
+        # it with the file extension of the uploaded resume file. This combination creates a unique key that 
+        # will be used to store the resume file in an S3 bucket.
+        # r.find is a string method that returns the last occurence of a specified character 
         key = uuid.uuid4().hex[:6] + resume_file.name[resume_file.name.rfind('.'):]
         # just in case something goes wrong
         try:
@@ -62,7 +46,6 @@ def add_resume(request, user_id):
             s3.upload_fileobj(resume_file, bucket, key)
             # build the full url string
             url = f"{os.environ['S3_BASE_URL']}{bucket}/{key}"
-            # we can assign to cat_id or cat (if you have a cat object)
             Resume.objects.create(url=url, user_id=user_id)
         except:
             print('An error occurred uploading file to S3')
@@ -77,9 +60,7 @@ def signup(request):
     if form.is_valid():
       # This will add the user to the database
       user = form.save()
-      # This is how we log a user in via code
       login(request, user)
-      print('this is user_id inside signup', request.user.id)
       return redirect('initial_skills', user_id = request.user.id)
     else:
       error_message = 'Invalid sign up - try again'
@@ -102,12 +83,8 @@ def add_initial_skills(request, user_id):
     if form.is_valid():
         new_skill = form.save(commit=False)
         new_skill.user_id = user_id
-        print(new_skill)
         new_skill.save()
-
-        x = MyUser.objects.get(id=user_id).skills.add(new_skill.id)
-        print('this is x', x)
-
+        MyUser.objects.get(id=user_id).skills.add(new_skill.id)
         return redirect('initial_skills', user_id = user_id)
 
 def delete_skill(request, user_id, skill_id):
@@ -119,7 +96,6 @@ def delete_skill(request, user_id, skill_id):
     return redirect('profile')
 
 def job_listings(request):
-        # Look into refactoring 
         #json is a json dictionary that has parsed the request object
         json = response.json()
         #results is an array that (in this case) contains additional dictionaries 
@@ -128,10 +104,6 @@ def job_listings(request):
         results_list = []
 
         for i in results:       
-            # test = Job.objects.get(job_id.__contains__(i['id']))
-            # print(test)
-            # id = i['id']
-            # final_jobs = Job.objects.filter(id__in = x)
             if Job.objects.filter(job_id=i['id']).exists():
                 pass
             else:
@@ -139,37 +111,56 @@ def job_listings(request):
                 new_object.save()
                 job_list.append(new_object)
 
-            
-            # new_job = Job.objects.create(description =i['description'], title = i['title'], company_display_name = i['company'],category_label= i['category'], location_display_name = i['location'], job_id = i['id'],job_posting_url = i['redirect_url'])
-            # new_job.save()
-        # print(job_list)
         results_list = Job.objects.all()
         # renders the html with the results list 
         return render(request, 'job/job_listings.html', {'results_list': results_list})
 
 @login_required
 def job_matches(request): 
-    #json is a json dictionary that has parsed the request object
+    # parsed response 
     json = response.json()
-    #results is an array that (in this case) contains additional dictionaries 
+    # results is an array that (in this case) contains additional dictionaries 
     results = json['results']
     matches = []
+    # grabs the currenlty authenticated user 
     current_user = request.user
+    # queries the MyUser model to retrieve the MyUser instance associated with the id
     user = MyUser.objects.filter(id=current_user.id)
-    t = user.values_list('skills')
-    skills = Skill.objects.filter(id__in = t)
+    # grabs all of the user's skills as ids 
+    skill_ids = user.values_list('skills')
+    # grabs all skills objects associated with skill ids 
+    skills = Skill.objects.filter(id__in = skill_ids)
     # list of all user skills
-    skill_list = []
-    for i in skills:
-        skill_list.append(str(i))
+    skill_list = [str(skill) for skill in skills]
     # list of all skill matches
     matches = []
-    # iterates
-    for i in results:
-        for j in skill_list:
-            if (i['description'].lower().__contains__(j.lower())):
-                matches.append(i)
-                break 
+
+    #  Using a list comprehension in tandem with 
+    #  a generator expression to return a list of 
+    #  jobs that match a user's skillset.  Generator 
+    #  expressions are a cool feature in Python that 
+    #  you can use in conjunction with the any function 
+    #  to efficiently deal with large datasets.  In this 
+    #  case, because of lazy evaluation, the generator 
+    #  expression iterates only up to the point where a 
+    #  true boolean value is returned and then stops, at 
+    #  which point the job is added to the matches list.  
+    #  Any additional computational power that would be 
+    #  required to iterate over the rest of potential matches 
+    #  were lazy evaluation not being used, is avoided.  Pretty cool.  
+
+    # matches = [job for job in results if any(skill.lower() in job['description'].lower() for skill in skill_list)]
+
+    for job in results:
+    # Check if any skill in the skill_list is present in the lowercase job description
+    # Generator expression is used in conjunction with any function to allow lazy evaluation of
+    # a potentially large dataset, this is a funcitonal programming idea, a la Haskell
+        match = any(skill.lower() in job['description'].lower() for skill in skill_list)
+    
+    # If at least one skill is found, add the job to the matches list
+        if match:
+            matches.append(job)
+
     return render(request, 'user/job_matches.html', {'matches': matches})
 
 @login_required
@@ -210,8 +201,7 @@ def add_skill(request, user_id):
         print(new_skill)
         new_skill.save()
 
-        x = MyUser.objects.get(id=user_id).skills.add(new_skill.id)
-        print('this is x', x)
+        MyUser.objects.get(id=user_id).skills.add(new_skill.id)
 
         return redirect('profile')
 
@@ -219,16 +209,16 @@ def searchbar(request):
         matched_arr = []
         final_arr = []
         if request.method == 'GET':
+            # extract the search value from the query string 
             search = request.GET.get('search')
             test_list = Job.objects.all().values_list('description', 'job_id')
             for i in test_list:
                 if i[0].lower().__contains__(search.lower()):
                     matched_arr.append(Job.objects.filter(job_id = i[1]))
-        # print(matched_arr)
+        # append the first item in the query set that is returned
         for i in matched_arr:
+            # extract the individual job object from the query set 
             final_arr.append(i[0])
-
-
 
         return render(request, "job/searchbar.html", {'matched_arr': final_arr})
 
