@@ -122,18 +122,13 @@ def job_matches(request):
     # results is an array that (in this case) contains additional dictionaries 
     results = json['results']
     matches = []
-    # grabs the currenlty authenticated user 
+    # grabs the currently authenticated user 
     current_user = request.user
-    # queries the MyUser model to retrieve the MyUser instance associated with the id
-    user = MyUser.objects.filter(id=current_user.id)
-    # grabs all of the user's skills as ids 
-    skill_ids = user.values_list('skills')
-    # grabs all skills objects associated with skill ids 
-    skills = Skill.objects.filter(id__in = skill_ids)
+    # grabs all skill objects associated with a user 
+    skills = current_user.skills.all()
     # list of all user skills
     skill_list = [str(skill) for skill in skills]
-    # list of all skill matches
-    matches = []
+
 
     #  Using a list comprehension in tandem with 
     #  a generator expression to return a list of 
@@ -150,6 +145,9 @@ def job_matches(request):
     #  were lazy evaluation not being used, is avoided.  Pretty cool.  
 
     # matches = [job for job in results if any(skill.lower() in job['description'].lower() for skill in skill_list)]
+
+    # list of all skill matches
+    matches = []
 
     for job in results:
     # Check if any skill in the skill_list is present in the lowercase job description
